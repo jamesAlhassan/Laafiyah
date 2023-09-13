@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 
 // routers
 const patientRouter = require('./routes/patient.route');
+const doctorRouter = require('./routes/doctor.route');
 
 // error handler
 const notFoundMiddleWare = require('./middleware/notFound.middleware');
@@ -19,6 +20,7 @@ const errorHandlerMiddleware = require('./middleware/errorHandler.middleware');
 
 // routes
 app.use('/api/v1/patient', patientRouter)
+app.use('/api/v1/doctor', doctorRouter)
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
 
