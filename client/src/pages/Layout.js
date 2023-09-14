@@ -1,4 +1,9 @@
 const Layout = () => {
-  return <div>Layout</div>;
+  return (
+    <div>
+      <Header />
+    </div>
+  );
 };
+
 export default Layout;
