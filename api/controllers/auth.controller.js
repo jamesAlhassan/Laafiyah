@@ -22,7 +22,6 @@ const login = async (req, res) => {
     if (!isPasswordCorrect) throw new UnauthenticatedError('Wrong password');
 
     const token = user.createJWT();
-    console.log("login token", token);
 
     res.status(StatusCodes.OK).json({
         user: {

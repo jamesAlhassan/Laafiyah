@@ -16,7 +16,6 @@ const authenticationMiddleware = (req, res, next) => {
         const user = User.findById(payload.id).select('-password');
 
         req.user = { id: payload.id, email: payload.email, role: payload.role};
-        console.log("req.user", req.user);
         next();
     } catch(error) {
         throw new UnauthenticatedError('Authentication invalid');
