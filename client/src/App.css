@@ -19,6 +19,13 @@ body {
   scrollbar-width: none;
 }
 
+header {
+  height: 110px;
+  display: flex;
+  align-items: center;
+  padding-block: 10px;
+}
+
 header .site-logo {
   color: black;
   margin-right: auto;
@@ -41,4 +48,16 @@ header a:hover {
 
 main {
   margin-bottom: 84px;
+}
+
+.home-container {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.46)),
+    url("./assets/bcg.png") no-repeat center center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 350px;
+  color: white;
+  padding: 45px 23px;
 }

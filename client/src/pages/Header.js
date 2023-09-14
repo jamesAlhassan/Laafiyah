@@ -15,12 +15,6 @@ export default function Header() {
       </Link>
       <nav>
         <NavLink
-          to='/home'
-          style={({ isActive }) => (isActive ? activeStyles : null)}
-        >
-          Home
-        </NavLink>
-        <NavLink
           to='/about'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
