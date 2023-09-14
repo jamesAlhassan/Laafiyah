@@ -10,17 +10,22 @@ app.use(express.json());
 // connect DB
 const mongoose = require('mongoose');
 
-// routers
+// routers and auth
+const authRouter = require('./routes/auth.route');
 const patientRouter = require('./routes/patient.route');
 const doctorRouter = require('./routes/doctor.route');
 
+const doctorAuth = require('./middleware/auth.middleware');
+
+
 // error handler
-const notFoundMiddleWare = require('./middleware/notFound.middleware');
-const errorHandlerMiddleware = require('./middleware/errorHandler.middleware');
+const notFoundMiddleWare = require('./middleware/not-found.middleware');
+const errorHandlerMiddleware = require('./middleware/error-handler.middleware');
 
 // routes
+app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/patient', patientRouter)
-app.use('/api/v1/doctor', doctorRouter)
+app.use('/api/v1/doctor', doctorAuth, doctorRouter)
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
 
