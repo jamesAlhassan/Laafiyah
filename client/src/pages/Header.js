@@ -15,13 +15,13 @@ export default function Header() {
       </Link>
       <nav>
         <NavLink
-          to='/about'
+          to='about'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
           About
         </NavLink>
         <NavLink
-          to='/login'
+          to='login'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
           login
