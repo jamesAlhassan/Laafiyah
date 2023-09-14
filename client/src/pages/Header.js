@@ -18,7 +18,7 @@ export default function Header() {
           to='/home'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
-          Host
+          Home
         </NavLink>
         <NavLink
           to='/about'
@@ -30,7 +30,7 @@ export default function Header() {
           to='/login'
           style={({ isActive }) => (isActive ? activeStyles : null)}
         >
-          Vans
+          login
         </NavLink>
       </nav>
     </header>
