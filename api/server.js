@@ -14,6 +14,7 @@ const mongoose = require('mongoose');
 const authRouter = require('./routes/auth.route');
 const patientRouter = require('./routes/patient.route');
 const doctorRouter = require('./routes/doctor.route');
+const appointmentRouter = require('./routes/appointment.route');
 
 const authMiddleware = require('./middleware/auth.middleware');
 
@@ -26,6 +27,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler.middleware');
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/patient', authMiddleware, patientRouter)
 app.use('/api/v1/doctor', authMiddleware, doctorRouter)
+app.use('/api/v1/appointment', authMiddleware, appointmentRouter)
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
 
