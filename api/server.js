@@ -15,7 +15,7 @@ const authRouter = require('./routes/auth.route');
 const patientRouter = require('./routes/patient.route');
 const doctorRouter = require('./routes/doctor.route');
 
-const doctorAuth = require('./middleware/auth.middleware');
+const authMiddleware = require('./middleware/auth.middleware');
 
 
 // error handler
@@ -24,8 +24,8 @@ const errorHandlerMiddleware = require('./middleware/error-handler.middleware');
 
 // routes
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/patient', patientRouter)
-app.use('/api/v1/doctor', doctorAuth, doctorRouter)
+app.use('/api/v1/patient', authMiddleware, patientRouter)
+app.use('/api/v1/doctor', authMiddleware, doctorRouter)
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
 

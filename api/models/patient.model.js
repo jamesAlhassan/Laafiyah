@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 
 const PatientSchema = new mongoose.Schema({
+    user: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+        required: [true, 'Please provide a user'],
+        unique: true,
+    },
     firstName: {
         type: String,
         required: [true, 'please provide a name'],
@@ -14,20 +18,6 @@ const PatientSchema = new mongoose.Schema({
         required: [true, 'please provide a name'],
         maxlength: 50,
         minlength: 3,
-    },
-    email: {
-        type: String,
-        required: [true, 'Please provide email'],
-        match: [
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            'Please provide a valid email',
-        ],
-        unique: true,
-    },
-    password: {
-        type: String,
-        required: [true, 'Please provide password'],
-        minlength: 6,
     },
     phoneNumber: {
         type: String,
@@ -60,17 +50,5 @@ const PatientSchema = new mongoose.Schema({
 },
     { timestamps: true }
 );
-
-// hash password with bcrypt before saving
-PatientSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
-});
-
-// method to compare passwords
-PatientSchema.methods.comparePassword = async function(patientPassword){
-    const isMatch = await bcrypt.compare(patientPassword, this.password);
-    return isMatch;
-}
 
 module.exports = mongoose.model('Patient', PatientSchema);
