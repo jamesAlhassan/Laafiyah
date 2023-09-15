@@ -23,7 +23,7 @@ const addDoctor = async (req, res) => {
 }
 
 const getDoctor = async (req, res, next) => {
-    // get doctor Id from req params (NB: )
+    // get doctor Id from req params (anyone can get a doctor )
     const { id } = req.params;
     const doctor = await Doctor.find({ _id: id });
     if (!doctor || doctor.length === 0) {
@@ -33,6 +33,7 @@ const getDoctor = async (req, res, next) => {
 }
 
 const getAllDoctors = async (req, res) => {
+    // anyone can get all doctors
     const doctors = await Doctor.find({});
     res.status(StatusCodes.OK).json({ doctors, count: doctors.length })
 }
@@ -41,20 +42,19 @@ const updateDoctor = async (req, res) => {
     // make sure the doctor has the right to update his profile
     const { body, params: { id }, user: { id: userId } } = req;
 
+    // get doctor and compare the userId to the userId from the token
     const oldDoctor = await Doctor.findOne({ _id: id });
+    if(!oldDoctor) throw new NotFoundError(`No doctor with id ${id} found`);
+
     if (oldDoctor.user.toString() !== userId)
         throw new UnauthenticatedError('You are not authorized to update this doctor');
 
 
     const doctor = await Doctor.findByIdAndUpdate(
         { _id: id },
-        req.body,
+        body,
         { new: true, runValidators: true }
     );
-
-    if (!doctor) {
-        throw new NotFoundError(`No doctor with id ${id} found`);
-    }
 
     res.status(StatusCodes.OK).json({ doctor });
 }
@@ -64,11 +64,12 @@ const deleteDoctor = async (req, res) => {
     const { id } = req.params;
 
     const oldDoctor = await Doctor.findOne({ _id: id });
+    if (!oldDoctor) throw new NotFoundError(`No doctor with id ${id} found`);
     if (oldDoctor.user.toString() !== req.user.id)
         throw new UnauthenticatedError('You are not authorized to delete this doctor');
 
     const doctor = await Doctor.findByIdAndRemove({ _id: id });
-    if (!doctor) throw new NotFoundError(`No doctor with id ${id} found`);
+    
     res.status(StatusCodes.OK).send();
 }
 
