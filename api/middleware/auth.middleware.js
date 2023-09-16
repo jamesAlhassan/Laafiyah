@@ -18,7 +18,7 @@ const authenticationMiddleware = (req, res, next) => {
         req.user = { id: payload.id, email: payload.email, role: payload.role};
         next();
     } catch(error) {
-        throw new UnauthenticatedError('Authentication invalid');
+        throw new UnauthenticatedError(`Authentication invalid: ${error.message}`);
     }
 }
 
