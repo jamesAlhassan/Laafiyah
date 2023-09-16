@@ -4,8 +4,7 @@ const AppointmentSchema = new mongoose.Schema({
     patientRef: {
         type: mongoose.Types.ObjectId,
         ref: 'Patient',
-        required: [true, 'should include a patient'],
-        unique: true
+        required: [true, 'should include a patient']
     },
     doctorRef: {
         type: mongoose.Types.ObjectId,
