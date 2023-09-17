@@ -130,3 +130,11 @@ main {
   padding: 2rem 2.5rem;
   margin: 3rem auto;
 }
+
+.form-label {
+  display: block;
+  font-size: var(--small-text);
+  margin-bottom: 0.5rem;
+  text-transform: capitalize;
+  letter-spacing: var(--letterSpacing);
+}
