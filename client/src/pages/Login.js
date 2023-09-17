@@ -151,6 +151,18 @@ const Login = () => {
         </form>
       )}
       {/* PATIENT FORM */}
+      <div class='user'>
+        <div class='user_unregistered'>
+          <h2 class='user_unregistered-title'>Don't have an account?</h2>
+          <p class='user_unregistered-text'>
+            Banjo tote bag bicycle rights, High Life sartorial cray craft beer
+            whatever street art fap.
+          </p>
+          <button class='user_unregistered-signup' id='signup-button'>
+            Sign up
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
