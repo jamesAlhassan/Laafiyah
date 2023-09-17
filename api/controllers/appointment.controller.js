@@ -53,16 +53,18 @@ const getAppointment = async (req, res) => {
 
     const user = req.user;
 
-    const appointment = await Appointment.findOne({ _id: req.params.appointmentId });
+    const appointment = await Appointment.findOne({ _id: req.params.appointmentId })
+        .populate('doctorRef')
+        .populate('patientRef')
+        .exec();
+
     if (!appointment) throw new NotFoundError('Appointment not available');
 
     // make sure patient or doctor has right to view appointment
-    const isDoctor_ = await isDoctor(user.id, appointment.doctorRef);
-    if (user.role === 'doctor' && !isDoctor_)
+    if (user.role === 'doctor' && appointment.doctorRef.user.toString() !== user.id)
         throw new UnauthenticatedError('You are not authorized to view this appointment');
 
-    const isPatient_ = await isPatient(user.id, appointment.patientRef);
-    if (user.role === 'patient' && !isPatient_)
+    if (user.role === 'patient' && appointment.patientRef.user.toString() !== user.id)
         throw new UnauthenticatedError('You are not authorized to view this appointment');
 
     res.status(StatusCodes.OK).json({ appointment });
@@ -72,14 +74,16 @@ const updateAppointment = async (req, res) => {
     const user = req.user;
     const appointmentId = req.params.appointmentId;
 
-    const appointment = await Appointment.findOne({ _id: appointmentId });
+    const appointment = await Appointment.findOne({ _id: appointmentId })
+        .populate('doctorRef')
+        .populate('patientRef')
+        .exec();
     if (!appointment) throw new NotFoundError('Appointment not found');
 
     // if user is doctor, make sure it's his appointment
     if (user.role === 'doctor') {
-        const _isDoctor = await isDoctor(user.id, appointment.doctorRef);
-        if (!_isDoctor) throw new UnauthenticatedError('You are not authorized to update this appointment');
-
+        if (appointment.doctorRef.user.toString() !== user.id)
+            throw new UnauthenticatedError('You are not authorized to update this appointment');
         try {
             const updatedAppointment = await Appointment.findByIdAndUpdate(
                 { _id: appointmentId },
@@ -94,8 +98,8 @@ const updateAppointment = async (req, res) => {
 
     // if user is patient, make sure it's his appointment
     if (user.role === 'patient') {
-        const _isPatient = await isPatient(user.id, appointment.patientRef);
-        if (!_isPatient) throw new UnauthenticatedError('You are not authorized to update this appointment');
+        if (appointment.patientRef.user.toString() !== user.id)
+            throw new UnauthenticatedError('You are not authorized to update this appointment');
         try {
             const updatedAppointment = await Appointment.findByIdAndUpdate(
                 { _id: appointmentId },
