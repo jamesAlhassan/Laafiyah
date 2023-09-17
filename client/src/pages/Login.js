@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const Login = () => {
   const [user, setUser] = useState({
     name: "",
@@ -154,7 +155,9 @@ const Login = () => {
       <div className='form user_unregistered'>
         <div>
           <h2>Don't have an account?</h2>
-          <button className='btn'>Sign up</button>
+          <button className='btn'>
+            <NavLink to='/signup'>Sign Up</NavLink>
+          </button>
         </div>
       </div>
     </div>
