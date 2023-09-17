@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 const Login = () => {
   const [user, setUser] = useState({
     name: "",
@@ -17,13 +18,17 @@ const Login = () => {
   };
   const handleSubmit = () => {};
   return (
-    <div>
-      <button className='btn' onClick={handleDocLogin}>
-        {docLogin ? "as a patient" : "as a doctor"}
+    <div className='form'>
+      <button
+        className='btn'
+        style={{ marginBottom: 35 }}
+        onClick={handleDocLogin}
+      >
+        {docLogin ? "login as a patient" : "login as a doctor"}
       </button>
       {/* DOCTOR FORM */}
       {docLogin ? (
-        <form className='form' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <h4>Laafiyah Login</h4>
           {/* name */}
           <div className='form-row'>
@@ -67,40 +72,26 @@ const Login = () => {
               onChange={handleChange}
             />
           </div>
-          {/* hospital */}
+          {/* docCode */}
           <div className='form-row'>
             <label htmlFor='hospital' className='form-label'>
-              Hospital
+              Doctor Code
             </label>
             <input
-              type='hospital'
+              type='docCode'
               className='form-input'
-              id='hospital'
-              name='hospital'
-              value={user.hospital}
+              id='docCode'
+              value={user.docCode}
               onChange={handleChange}
             />
           </div>
-          {/* license no. */}
-          <div className='form-row'>
-            <label htmlFor='license' className='form-label'>
-              License
-            </label>
-            <input
-              type='license'
-              className='form-input'
-              id='license'
-              name='license'
-              value={user.license}
-              onChange={handleChange}
-            />
-          </div>
+
           <button type='submit' className='btn btn-block'>
             submit
           </button>
         </form>
       ) : (
-        <form className='form' onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <h4>Laafiyah Login</h4>
           {/* name */}
           <div className='form-row'>
@@ -151,6 +142,14 @@ const Login = () => {
         </form>
       )}
       {/* PATIENT FORM */}
+      <div className=' user_unregistered'>
+        <div>
+          <h2>Don't have an account?</h2>
+          <button className='btn'>
+            <NavLink to='/signup'>Sign Up</NavLink>
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
