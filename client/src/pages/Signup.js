@@ -6,16 +6,16 @@ const Signup = () => {
           <div class='input_grp'>
             <div class='input_wrap'>
               <label for='fname'>First Name</label>
-              <input type='text' id='fname' />
+              <input type='text' id='fname' required />
             </div>
             <div class='input_wrap'>
               <label for='lname'>Last Name</label>
-              <input type='text' id='lname' />
+              <input type='text' id='lname' required />
             </div>
           </div>
           <div class='input_wrap'>
             <label for='email'>Email Address</label>
-            <input type='text' id='email' />
+            <input type='text' id='email' required />
           </div>
           <div class='input_wrap'>
             <label>Gender</label>
@@ -46,12 +46,12 @@ const Signup = () => {
             </ul>
           </div>
           <div class='input_wrap'>
-            <label for='city'>City</label>
-            <input type='text' id='city' />
+            <label for='dob'>DOB</label>
+            <input type='date' id='dob' required />
           </div>
           <div class='input_wrap'>
-            <label for='country'>Country</label>
-            <input type='text' id='country' />
+            <label for='other'>Other</label>
+            <input type='text' id='other' />
           </div>
           <div class='input_wrap'>
             <input type='submit' value='Register Now' class='submit_btn' />
