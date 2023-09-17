@@ -237,6 +237,8 @@ main {
   margin-top: 0.5rem;
 }
 .user_unregistered {
+  padding: 2rem;
+  margin-top: 5rem;
   color: #fff;
   background-color: rgba(34, 34, 34, 0.85);
 }
