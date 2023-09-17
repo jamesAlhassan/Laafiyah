@@ -121,7 +121,7 @@ const getPatientsAppoinments = async (req, res) => {
 
     try {
         const appointments = await Appointment.find({ patientRef: req.params.patientId });
-        res.send({ appointments, count: appointments.length })
+        res.status(StatusCodes.OK).send({ appointments, count: appointments.length })
     } catch (error) {
         new BadRequestError(error.message);
     }
@@ -135,7 +135,7 @@ const getDoctorsAppoinments = async (req, res) => {
 
     try {
         const appointments = await Appointment.find({ doctorRef: req.params.doctorId });
-        res.send({ appointments, count: appointments.length })
+        res.status(StatusCodes.OK).send({ appointments, count: appointments.length })
     } catch (error) {
         new BadRequestError(error.message);
     }

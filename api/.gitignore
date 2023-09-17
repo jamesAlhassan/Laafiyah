@@ -1,3 +1,5 @@
+# add temp folder which contains files I don't want to push
+temp/
 # Logs
 logs
 *.log

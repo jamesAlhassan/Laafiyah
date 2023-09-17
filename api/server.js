@@ -15,19 +15,19 @@ const authRouter = require('./routes/auth.route');
 const patientRouter = require('./routes/patient.route');
 const doctorRouter = require('./routes/doctor.route');
 const appointmentRouter = require('./routes/appointment.route');
+const reviewRouter = require('./routes/review.route');
 
-const authMiddleware = require('./middleware/auth.middleware');
-
-
-// error handler
+// middlewares 
 const notFoundMiddleWare = require('./middleware/not-found.middleware');
 const errorHandlerMiddleware = require('./middleware/error-handler.middleware');
+const authMiddleware = require('./middleware/auth.middleware');
 
 // routes
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/patient', authMiddleware, patientRouter)
 app.use('/api/v1/doctor', authMiddleware, doctorRouter)
 app.use('/api/v1/appointment', authMiddleware, appointmentRouter)
+app.use('/api/v1/review', authMiddleware, reviewRouter);
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
 
