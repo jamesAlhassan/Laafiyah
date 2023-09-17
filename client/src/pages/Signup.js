@@ -59,11 +59,11 @@ const Signup = () => {
               <input type='date' id='dob' required />
             </div>
             <div class='input_wrap'>
-              <label for='hospital'>hospital</label>
+              <label for='hospital'>Hospital</label>
               <input type='text' id='hospital' />
             </div>
             <div class='input_wrap'>
-              <label for='license'>license #</label>
+              <label for='license'>License #</label>
               <input type='text' id='license' />
             </div>
             <div class='input_wrap'>
