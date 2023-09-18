@@ -1,0 +1,15 @@
+.review {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+}
+
+.subscript {
+    display: flex;
+    gap: 20px;
+}
+
+.subscript p {
+    color: #808088;
+}

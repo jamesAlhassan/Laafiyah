@@ -1,0 +1,11 @@
+.allDoctors {
+    background-color: #C0C0C0;
+}
+
+.allDoctors>ul {
+    padding: 20px 200px;   
+}
+
+.allDoctors>ul>li {
+    margin-bottom: 20px;
+}
