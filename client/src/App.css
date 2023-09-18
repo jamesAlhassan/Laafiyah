@@ -344,3 +344,23 @@ main {
     grid-template-rows: initial;
   }
 }
+.header {
+  grid-area: header;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  padding: 1rem 3rem;
+  @media screen and (max-width: 400px) {
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+}
+.btn-appointment {
+  padding: $spacing $spacing-l;
+  border-radius: $spacing-xxs;
+  height: fit-content;
+  color: $text-1;
+  background: rgb(147, 149, 237);
+  background: linear-gradient(90deg, rgba(147, 149, 237, 1) 0%, #6c6de3 100%);
+  font-weight: 600;
+}
