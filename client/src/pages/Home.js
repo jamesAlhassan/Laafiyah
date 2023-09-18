@@ -24,17 +24,18 @@ const Home = () => {
       </header>
       <aside class='aside'>
         <ul>
-          <li class='logo hide'>
+          <li class='logo hide' title='Add appointment'>
             <AiFillPlusCircle />
           </li>
-          <li className='active'>
-            <Link to='/'>
-              <FaFolder />
-            </Link>
-          </li>
-          <li>
+
+          <li className='active' title='View all doctors'>
             <Link to='/'>
               <BsFillPeopleFill />
+            </Link>
+          </li>
+          <li title='View all appointments'>
+            <Link to='/'>
+              <FaFolder />
             </Link>
           </li>
           <li>
