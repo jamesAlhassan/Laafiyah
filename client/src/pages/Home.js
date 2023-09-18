@@ -27,7 +27,7 @@ const Home = () => {
           <li class='logo hide'>
             <AiFillPlusCircle />
           </li>
-          <li class='active'>
+          <li className='active'>
             <Link to='/'>
               <FaFolder />
             </Link>
@@ -47,7 +47,7 @@ const Home = () => {
               <BsFillPeopleFill />
             </Link>
           </li>
-          <li class='hide'>
+          <li className='hide'>
             <Link to='/'>
               <BsFillCalendar2DayFill />
             </Link>

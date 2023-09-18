@@ -417,6 +417,7 @@ select {
   font-size: 1.5rem;
   color: gray;
   background-color: #fcfdfd;
+  padding-top: 10rem;
   @media screen and (max-width: 400px) {
     position: fixed;
     bottom: 0;
