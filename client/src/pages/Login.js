@@ -72,19 +72,6 @@ const Login = () => {
               onChange={handleChange}
             />
           </div>
-          {/* docCode */}
-          <div className='form-row'>
-            <label htmlFor='hospital' className='form-label'>
-              Doctor Code
-            </label>
-            <input
-              type='docCode'
-              className='form-input'
-              id='docCode'
-              value={user.docCode}
-              onChange={handleChange}
-            />
-          </div>
 
           <button type='submit' className='btn btn-block'>
             submit

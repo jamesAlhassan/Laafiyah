@@ -59,11 +59,23 @@ const Signup = () => {
               <input type='date' id='dob' required />
             </div>
             <div class='input_wrap'>
-              <label for='hospital'>Hospital</label>
+              <label for='phoneNumber'>Phone Number</label>
+              <input type='number' id='phoneNumber' />
+            </div>
+            <div class='input_wrap'>
+              <label for='location'>Location</label>
+              <input type='text' id='location' />
+            </div>
+            <div class='input_wrap'>
+              <label for='specialty'>Specialty</label>
+              <input type='text' id='specialty' />
+            </div>
+            <div class='input_wrap'>
+              <label for='hospital'>Hospital Affiliation</label>
               <input type='text' id='hospital' />
             </div>
             <div class='input_wrap'>
-              <label for='license'>License #</label>
+              <label for='license'>License Number</label>
               <input type='text' id='license' />
             </div>
             <div class='input_wrap'>
@@ -88,6 +100,7 @@ const Signup = () => {
               <label for='email'>Email Address</label>
               <input type='text' id='email' required />
             </div>
+
             <div class='input_wrap'>
               <label>Gender</label>
               <ul>
@@ -121,8 +134,12 @@ const Signup = () => {
               <input type='date' id='dob' required />
             </div>
             <div class='input_wrap'>
-              <label for='other'>Other</label>
-              <input type='text' id='other' />
+              <label for='phoneNumber'>Phone Number</label>
+              <input type='number' id='phoneNumber' />
+            </div>
+            <div class='input_wrap'>
+              <label for='location'>Location</label>
+              <input type='text' id='location' />
             </div>
             <div class='input_wrap'>
               <input type='submit' value='Register Now' class='submit_btn' />

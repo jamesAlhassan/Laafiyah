@@ -1,18 +1,61 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import { AiFillPlusCircle } from "react-icons/ai";
+import { FaColumns, FaFolder } from "react-icons/fa";
+import { BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
+import profile_pic from "../assets/profile_pic.jpeg";
 const Home = () => {
   return (
-    <div className='home-container'>
-      <h1>
-        You got the doctor appointment plans, we got the appointment plans.
-      </h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi incidunt
-        eos aut. Corrupti, odit aspernatur sapiente ab amet error, at corporis
-        nostrum veniam magnam natus tempora perspiciatis dolore quam enim?
-      </p>
-      <Link to='login'>Book Appointment</Link>
+    <div class='wrapper'>
+      <header class='header'>
+        <a href='#' class='btn-appointment'>
+          Make an appointment
+        </a>
+        <div class='profile'>
+          <div class='image'>
+            <img src={profile_pic} />
+            <div class='notification'></div>
+          </div>
+
+          <select>
+            <option value='John Doe'>John Doe</option>
+          </select>
+        </div>
+      </header>
+      <aside class='aside'>
+        <ul>
+          <li class='logo hide' title='Add appointment'>
+            <AiFillPlusCircle />
+          </li>
+
+          <li className='active' title='View all doctors'>
+            <Link to='/'>
+              <BsFillPeopleFill />
+            </Link>
+          </li>
+          <li title='View all appointments'>
+            <Link to='/'>
+              <FaFolder />
+            </Link>
+          </li>
+          <li>
+            <Link to='/'>
+              <BsFillPeopleFill />
+            </Link>
+          </li>
+          <li>
+            <Link to='/'>
+              <BsFillPeopleFill />
+            </Link>
+          </li>
+          <li className='hide'>
+            <Link to='/'>
+              <BsFillCalendar2DayFill />
+            </Link>
+          </li>
+        </ul>
+      </aside>
+      <main className='main'></main>
     </div>
   );
 };
