@@ -54,6 +54,7 @@ const Home = () => {
           </li>
         </ul>
       </aside>
+      <main className='main'></main>
     </div>
   );
 };
