@@ -22,9 +22,15 @@ const login = async (req, res) => {
 
     const token = user.createJWT();
 
-    res.status(StatusCodes.OK).json({
+    // get user without the password
+    // const { password, ...info } = user._doc;
+
+    res.cookie("accessToken", token, {
+        htppOnly: true,
+    }).status(StatusCodes.OK).json({
         user: {
             email: user.email,
+            role: user.role,
             token
         }
     })
