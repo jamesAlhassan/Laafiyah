@@ -332,3 +332,15 @@ main {
 .form_wrap .submit_btn:hover {
   background: var(--primary-500);
 }
+.wrapper {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 7.5rem 1fr;
+  grid-template-columns: 6.5rem 1fr;
+  grid-template-areas: "aside header" "aside main";
+  flex-wrap: wrap;
+  @media screen and (max-width: 400px) {
+    grid-template-columns: initial;
+    grid-template-rows: initial;
+  }
+}
