@@ -1,0 +1,45 @@
+.doctor {
+    display: flex;
+    justify-content: center;
+    background-color: #C0C0C0;
+}
+
+.container {
+    width: auto;
+    padding: 30px 50px;
+    display: flex;
+    gap: 20px;
+}
+
+.left {
+    flex: 2;
+    background-color: white;
+    padding: 20px;
+}
+
+.moreInfo li {
+    list-style-type: disc;
+}
+
+.right {
+    flex: 1;
+    padding: 20px;
+}
+
+.right .booking {
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgray;
+    padding: 20px;
+}
+
+.right .booking button {
+    font-weight: 500;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 20px;
+}

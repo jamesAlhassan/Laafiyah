@@ -5,7 +5,9 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import About from "./pages/About";
 import Signup from "./pages/Signup";
-import Dashboard from "./pages/Dashboard/Dashboard";
+import AllDoctors from "./pages/allDoctors/AllDoctors";
+import Doctor from "./pages/doctor/Doctor";
+
 const App = () => {
   return (
     <BrowserRouter>
@@ -15,7 +17,9 @@ const App = () => {
           <Route path='about' element={<About />} />
           <Route path='login' element={<Login />} />
           <Route path='signup' element={<Signup />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='alldoctors' element={<AllDoctors />} />
+          <Route path='doctor' element={<Doctor />} />
+
         </Route>
       </Routes>
     </BrowserRouter>

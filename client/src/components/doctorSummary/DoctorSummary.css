@@ -1,0 +1,9 @@
+.introInfo {
+    display: flex;
+    gap: 20px;
+}
+
+.introInfo .summary {
+    line-height: 10px;
+    padding: 0px;
+}
