@@ -1,0 +1,97 @@
+.doctorForm {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Form label style */
+label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Form input style */
+.doctorForm
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+/* Buttons style */
+.doctorForm button {
+    padding: 10px 20px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* Add Specialization button style */
+.doctorForm button[type="button"] {
+    background-color: #28a745;
+    margin-left: 10px;
+}
+
+/* Specializations list style */
+.doctorForm ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.doctorForm li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2px;
+}
+
+/* Edit and Remove buttons style */
+.doctorForm li button {
+    background-color: #ffc107;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+/* Hover effect for Edit and Remove buttons */
+.doctorForm li button:hover {
+    background-color: #ffca28;
+}
+
+/* Style for option elements */
+select#gender option {
+    background-color: #fff;
+    color: #333;
+}
+
+/* Gender selection dropdown style */
+select#gender {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff;
+    background-image: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }

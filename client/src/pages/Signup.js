@@ -1,4 +1,5 @@
 import { useState } from "react";
+import DoctorRegistrationForm from "../components/signup/DoctorSignup";
 const Signup = () => {
   const [docSignup, setDocSignup] = useState(false);
   const handleDocSignup = () => {
@@ -10,7 +11,8 @@ const Signup = () => {
         {docSignup ? "signup as a patient" : "signup as a doctor"}
       </button>
       {docSignup ? (
-        <form>
+        <DoctorRegistrationForm />
+        {/* <form>
           <div class='form_wrap'>
             <div class='input_grp'>
               <div class='input_wrap'>
@@ -82,7 +84,7 @@ const Signup = () => {
               <input type='submit' value='Register Now' class='submit_btn' />
             </div>
           </div>
-        </form>
+        </form> */}
       ) : (
         <form>
           <div class='form_wrap'>
