@@ -52,6 +52,7 @@ input[type="password"] {
 .doctorForm ul {
     list-style-type: none;
     padding: 0;
+    height: fit-content;
 }
 
 .doctorForm li {
@@ -95,3 +96,7 @@ select#gender {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
   }
+
+.doctorForm button[type='submit'] {
+    width: 100%;
+}
