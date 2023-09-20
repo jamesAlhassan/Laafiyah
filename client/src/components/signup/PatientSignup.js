@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
 import newRequest from '../../utils/newRequest';
+import { useNavigate } from 'react-router-dom';
 
 function PatientRegistrationForm() {
   // Define state variables for form fields
@@ -13,19 +14,21 @@ function PatientRegistrationForm() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [location, setLocation] = useState('');
 
+  const navigate = useNavigate();
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // construct a user object with the form data, default role is doctor
+    // construct a user object with the form data, default role is patient
     const userData = {
       email,
       password,
       role: 'patient'
     }
 
-    // Construct a doctor object with form data
-    const doctorData = {
+    // Construct a patient object with form data
+    const patientData = {
       firstName,
       lastName,
       dateOfBirth,
@@ -35,17 +38,25 @@ function PatientRegistrationForm() {
     };
 
     try {
-      // add user to database and add doctor profile to database
-      const res = await newRequest.post('/auth/register', { ...userData });
-      console.log("After inserting user", res.data);
-      
-      // store the result in the localStorage of browser
-      localStorage.setItem("currentUser", JSON.stringify(res.data));
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      console.log("current User", currentUser);
+      // add user to the User collection
+      await newRequest.post('/auth/register', { ...userData })
+        .then((res) => {
+          console.log('user added');
+          localStorage.setItem("currentUser", JSON.stringify(res.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      const res2 = await newRequest.post('/doctor', { user: currentUser.id, ...doctorData });
-      console.log("after inserting doctor", res2.data);
+      // add the patient to the patient collection
+      await newRequest.post('/patient', { ...patientData })
+        .then((res) => {
+          console.log('Patient added successfullly');
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
     } catch (error) {
       console.log(error);
@@ -53,7 +64,7 @@ function PatientRegistrationForm() {
   };
 
   return (
-    <div className='doctorForm'>
+    <div className='signUpForm'>
       <h4>Patient Registration</h4>
       <form onSubmit={handleSubmit}>
         {/* First Name */}
@@ -137,7 +148,7 @@ function PatientRegistrationForm() {
           value={location}
           onChange={(e) => setLocation(e.target.value)}
           required
-        /><br/>
+        /><br />
 
         {/* Submit Button */}
         <button type="submit">Register Patient</button>
