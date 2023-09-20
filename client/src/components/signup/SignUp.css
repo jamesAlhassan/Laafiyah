@@ -16,8 +16,7 @@ label {
 }
 
 /* Form input style */
-.doctorForm
-input[type="text"],
+.doctorForm input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="date"],
@@ -44,15 +43,20 @@ input[type="password"] {
 
 /* Add Specialization button style */
 .doctorForm button[type="button"] {
-    background-color: #28a745;
+    
     margin-left: 10px;
 }
 
 /* Specializations list style */
-.doctorForm ul {
+/* .doctorForm ul {
     list-style-type: none;
     padding: 0;
-    height: fit-content;
+} */
+
+.doctorForm .specialities {
+    padding: 0px;
+    margin: 0px;
+    min-height: auto;
 }
 
 .doctorForm li {
@@ -95,7 +99,7 @@ select#gender {
     background-image: linear-gradient(to bottom, #ffffff 0%, #f9f9f9 100%);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-  }
+}
 
 .doctorForm button[type='submit'] {
     width: 100%;

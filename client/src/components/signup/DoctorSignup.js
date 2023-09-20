@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import "./SignUp.css";
 import newRequest from '../../utils/newRequest';
+import axios from 'axios';
 
 function DoctorRegistrationForm() {
   // Define state variables for form fields
@@ -67,17 +68,23 @@ function DoctorRegistrationForm() {
     };
 
     try {
-      // add user to database and add doctor profile to database
-      const res = await newRequest.post('/auth/register', { ...userData });
-      console.log("After inserting user", res.data);
+      // add user to the User collection
+      await newRequest.post('/auth/register', { ...userData })
+        .then((res) => {
+          localStorage.setItem("currentUser", JSON.stringify(res.data));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       
-      // store the result in the localStorage of browser
-      localStorage.setItem("currentUser", JSON.stringify(res.data));
-      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-      console.log("current User", currentUser);
-
-      const res2 = await newRequest.post('/doctor', { ...doctorData });
-      console.log("after inserting doctor", res2.data);
+        // add the doctor to the doctor collection
+      await newRequest.post('/doctor', { ...doctorData })
+        .then((res) => {
+          console.log('Doctor added successfullly');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
     } catch (error) {
       console.log(error);
