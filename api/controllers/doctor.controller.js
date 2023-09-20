@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const Doctor = require('../models/doctor.model');
-const { NotFoundError, UnauthenticatedError } = require('../errors');
+const { NotFoundError, UnauthenticatedError, BadRequestError } = require('../errors');
 
 const addDoctor = async (req, res) => {
     const { id, role } = req.user;
@@ -20,11 +20,10 @@ const addDoctor = async (req, res) => {
     req.body.dateOfBirth = new Date(req.body.dateOfBirth);
     try {
         const doctor = await Doctor.create(req.body);
+        res.status(StatusCodes.CREATED).json({ newDoctor: doctor });
     }catch(error) {
-        console.log(error);
+        throw new BadRequestError(error);
     }
-    
-    res.status(StatusCodes.CREATED).json({ newDoctor: doctor });
 }
 
 const getDoctor = async (req, res, next) => {

@@ -13,6 +13,7 @@ const authenticationMiddleware = (req, res, next) => {
 
     // get token from browser and verify it
     const token = req.cookies.accessToken;
+    if (!token) throw new UnauthenticatedError('Authentication invalid');
     try {
         const payload = jwt.verify(token, process.env.JWT_SECRET);
 

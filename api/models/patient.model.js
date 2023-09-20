@@ -28,7 +28,7 @@ const PatientSchema = new mongoose.Schema({
         // ],
         unique: true,
     },
-    dob: {
+    dateOfBirth: {
         type: Date,
         required: [true, 'please enter your date of birth']
     },
