@@ -1,6 +1,6 @@
 const { StatusCodes } = require('http-status-codes');
 const Doctor = require('../models/doctor.model');
-const { NotFoundError, BadRequestError, UnauthenticatedError } = require('../errors');
+const { NotFoundError, UnauthenticatedError } = require('../errors');
 
 const addDoctor = async (req, res) => {
     const { id, role } = req.user;
@@ -17,8 +17,13 @@ const addDoctor = async (req, res) => {
     req.body.user = id;
 
     // convert date from postman
-    req.body.dob = new Date(req.body.dob);
-    const doctor = await Doctor.create(req.body);
+    req.body.dateOfBirth = new Date(req.body.dateOfBirth);
+    try {
+        const doctor = await Doctor.create(req.body);
+    }catch(error) {
+        console.log(error);
+    }
+    
     res.status(StatusCodes.CREATED).json({ newDoctor: doctor });
 }
 

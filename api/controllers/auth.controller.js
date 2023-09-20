@@ -6,6 +6,7 @@ const register = async (req, res) => {
     const user = await User.create({ ...req.body });
 
     const token = user.createJWT();
+    res.cookie("accessToken", token);
     res.status(StatusCodes.CREATED).json({ user: { email: user.email }, token });
 }
 
@@ -25,9 +26,7 @@ const login = async (req, res) => {
     // get user without the password
     // const { password, ...info } = user._doc;
 
-    res.cookie("accessToken", token, {
-        htppOnly: true,
-    }).status(StatusCodes.OK).json({
+    res.cookie("accessToken", token).status(StatusCodes.OK).json({
         user: {
             email: user.email,
             role: user.role,
