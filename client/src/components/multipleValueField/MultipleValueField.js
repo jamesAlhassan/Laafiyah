@@ -59,7 +59,6 @@ function MultipleValueField({ items, setItems }) {
             </div>
             {items?.length > 0 && (
                 <div className="item-list">
-                    <label>Items:</label>
                     <span>{items.join(', ')}</span>
                 </div>
             )}
