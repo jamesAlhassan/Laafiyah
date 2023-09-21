@@ -56,6 +56,7 @@ const DoctorSchema = new mongoose.Schema({
     },
     qualifications: {
         type: [String],
+        required: [true, 'please provide a qualification'],
     },
     licenseNumber: {
         type: String,
