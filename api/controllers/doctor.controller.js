@@ -21,7 +21,7 @@ const addDoctor = async (req, res) => {
     try {
         const doctor = await Doctor.create(req.body);
         res.status(StatusCodes.CREATED).json({ newDoctor: doctor });
-    }catch(error) {
+    } catch (error) {
         throw new BadRequestError(error);
     }
 }
@@ -33,7 +33,8 @@ const getDoctor = async (req, res, next) => {
     if (!doctor || doctor.length === 0) {
         throw new NotFoundError(`No doctor with id ${id} found`);
     }
-    res.status(StatusCodes.OK).json({ doctor });
+
+    res.status(StatusCodes.OK).json(doctor);
 }
 
 const getAllDoctors = async (req, res) => {
@@ -48,7 +49,7 @@ const updateDoctor = async (req, res) => {
 
     // get doctor and compare the userId to the userId from the token
     const oldDoctor = await Doctor.findOne({ _id: id });
-    if(!oldDoctor) throw new NotFoundError(`No doctor with id ${id} found`);
+    if (!oldDoctor) throw new NotFoundError(`No doctor with id ${id} found`);
 
     if (oldDoctor.user.toString() !== userId)
         throw new UnauthenticatedError('You are not authorized to update this doctor');
@@ -73,7 +74,7 @@ const deleteDoctor = async (req, res) => {
         throw new UnauthenticatedError('You are not authorized to delete this doctor');
 
     const doctor = await Doctor.findByIdAndRemove({ _id: id });
-    
+
     res.status(StatusCodes.OK).send();
 }
 
