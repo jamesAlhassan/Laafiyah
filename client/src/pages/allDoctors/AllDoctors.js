@@ -1,12 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
 import DoctorCard from "../../components/doctorCard/DoctorCard";
 import "./AllDoctors.css";
-import newRequest from "../../utils/newRequest";
 
 const AllDoctors = () => {
 
     const { isLoading, error, data, refetch } = useQuery({
-        queryKey:[],
+        queryKey: [],
         queryFn: () =>
             newRequest.get(
                 '/doctor'
@@ -24,14 +24,14 @@ const AllDoctors = () => {
 
     return (
         <div className="allDoctors">
-        
-            <ul>
-                <li><DoctorCard /></li>
-                <li><DoctorCard /></li>
-                <li><DoctorCard /></li>
-                <li><DoctorCard /></li>
-                <li><DoctorCard /></li>
-            </ul>
+            {
+                data.doctors.map((doctor) =>
+                    <DoctorCard
+                        className="doctorCard"
+                        key={doctor._id}
+                        doctor={doctor}
+                    />)
+            }
         </div>
     );
 }

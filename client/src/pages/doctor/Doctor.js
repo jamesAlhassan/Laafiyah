@@ -1,21 +1,43 @@
+import { useQuery } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
 import DoctorSummary from '../../components/doctorSummary/DoctorSummary';
 import './Doctor.css';
 import Review from '../../components/review/Review';
 import { useEffect } from 'react';
+import { useParams } from "react-router-dom";
 
 const Doctor = () => {
+
+    const { id } = useParams();
 
     useEffect(() => {
         // 👇️ scroll to top on page load
         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }, []);
 
+    const { isLoading, error, data, refetch } = useQuery({
+        queryKey: [],
+        queryFn: () =>
+            newRequest.get(
+                `/doctor/${id}`
+            ).then((res) => {
+                console.log("Doctor: ", res.data)
+                return res.data;
+            }),
+    });
+
+    // when page is loading
+    if (isLoading) return <div>Loading</div>;
+
+    // when there is an error
+    if (error) return <div>An eror has occured</div>
+
     return (
         <div className='doctor'>
             <div className='container'>
                 <div className="left">
                     <div className='info'>
-                        <DoctorSummary />
+                        <DoctorSummary key={data[0]._id} doctor={data[0]} />
                         <div className='moreInfo'>
                             <h4>About</h4>
                             <p>
@@ -26,20 +48,25 @@ const Doctor = () => {
                             <h4>Services</h4>
                             <ul>
                                 <li>Endrocology And laser Surgery</li>
-                                <li>Radical Prostectomy</li>
-                                <li>General Consultation</li>
-                                <li>Surgery</li>
+                                <li>Endrocology</li>
+                                <li>Endrocology And laser</li>
+                                <li>Endrocology And laser Surgery</li>
+                                
                             </ul>
 
-                            <h4>Education</h4>
+                            <h4>Qualifications</h4>
                             <ul>
                                 <li>KATH</li>
                                 <li>KBTH</li>
                             </ul>
 
-                            <h4>Specialization</h4>
+                            <h4>specialities</h4>
                             <ul>
-                                <p>2009 - Present KBTH</p>
+                                <li>Radiology Radiology</li>
+                                <li>Radiology Radiology Radiology</li>
+                                <li>Radiology </li>
+                                <li>Radiology </li>
+                                <li>Radiology Radiology</li>
                             </ul>
 
                         </div>
