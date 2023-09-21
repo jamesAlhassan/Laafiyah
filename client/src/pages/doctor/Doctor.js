@@ -1,8 +1,14 @@
 import DoctorSummary from '../../components/doctorSummary/DoctorSummary';
 import './Doctor.css';
 import Review from '../../components/review/Review';
+import { useEffect } from 'react';
 
 const Doctor = () => {
+
+    useEffect(() => {
+        // 👇️ scroll to top on page load
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    }, []);
 
     return (
         <div className='doctor'>
