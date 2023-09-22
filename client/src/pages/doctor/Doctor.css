@@ -13,12 +13,31 @@
 
 .left {
     flex: 2;
-    background-color: white;
+    max-width: 800px;
+    margin: 0 auto;
     padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.moreInfo {
+    margin-top: 20px;
+    align-items: start;
+    display: block;
+    margin: 0px;
+}
+.moreInfo ul {
+    display: inline-block;
+    margin-top: 0px;
 }
 
 .moreInfo li {
-    list-style-type: disc;
+    display: list-item;
+    list-style: circle;
+    list-style: disc inside none;
 }
 
 .right {
@@ -27,12 +46,14 @@
 }
 
 .right .booking {
-    padding: 10px;
-    background-color: white;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    border: 1px solid lightgray;
+    padding: 10px;  
+    margin: 0 auto;
     padding: 20px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .right .booking button {

@@ -1,9 +1,15 @@
 .introInfo {
     display: flex;
+    align-items: center;
     gap: 20px;
 }
 
 .introInfo .summary {
-    line-height: 10px;
+    line-height: 5px;
     padding: 0px;
+}
+
+.introInfo>img {
+    width: 120px;
+    height: 120px;
 }

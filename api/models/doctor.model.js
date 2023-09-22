@@ -7,6 +7,10 @@ const DoctorSchema = new mongoose.Schema({
         required: [true, 'Please provide a user'],
         unique: true,
     },
+    title: {
+        type: String,
+        maxlength: 10
+    },
     firstName: {
         type: String,
         required: [true, 'please provide a name'],
@@ -40,13 +44,19 @@ const DoctorSchema = new mongoose.Schema({
         // ],
         unique: true,
     },
-    
     location: {
         type: String,
         required: [true, 'please enter your location']
     },
     specialities: {
         type: [String],
+    },
+    services: {
+        type: [String],
+    },
+    qualifications: {
+        type: [String],
+        required: [true, 'please provide a qualification'],
     },
     licenseNumber: {
         type: String,
@@ -56,6 +66,9 @@ const DoctorSchema = new mongoose.Schema({
     hospitalAffiliation: {
         type: String,
         required: [true, 'Please provide your hospital affiliation'],
+    },
+    about: {
+        type: String,
     },
     createdAt: {
         type: Date,
