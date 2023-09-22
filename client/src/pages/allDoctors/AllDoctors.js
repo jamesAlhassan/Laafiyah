@@ -25,7 +25,7 @@ const AllDoctors = () => {
     return (
         <div className="allDoctors">
             {
-                data.doctors.map((doctor) =>
+                data.doctors?.map((doctor) =>
                     <DoctorCard
                         className="doctorCard"
                         key={doctor._id}

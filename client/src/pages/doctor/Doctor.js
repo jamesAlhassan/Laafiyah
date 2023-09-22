@@ -22,6 +22,7 @@ const Doctor = () => {
                 `/doctor/${id}`
             ).then((res) => {
                 console.log("Doctor: ", res.data)
+                console.log("services", res.data[0].services)
                 return res.data;
             }),
     });
@@ -37,36 +38,30 @@ const Doctor = () => {
             <div className='container'>
                 <div className="left">
                     <div className='info'>
-                        <DoctorSummary key={data[0]._id} doctor={data[0]} />
+                        <DoctorSummary key={data[0]?._id} doctor={data[0]} />
                         <div className='moreInfo'>
                             <h4>About</h4>
-                            <p>
-                                Dr. K B Shilpashree is a Dentist,Preventive Dentistry and Public Health Dentist in JP Nagar 7 Phase, Bangalore and has an experience of 21 years in these fields. Dr. K B Shilpashree practices at Dental Profiles Clinic in JP Nagar 7 Phase, Bangalore,Dental Profiles in Bellandur, Bangalore and Dental Profiles in JP Nagar 5 Phase, Bangalore. She completed BDS from The Oxford dental College, Bangalore in 2002 and MDS - Community Dentistry from The Oxford dental College, Bangalore in 2008.
+                            <p>{data[0]?.about}</p>
 
-                                She is a member of Indian Dental Association and Indian Association of Public Health Dentistry. Some of the services provided by the doctor are: Dental Checkup (General),Dental Sleep Medicine (Snoring and Sleep Apnea Management),Composite Bondings,Partial Denture (Metal Based) and Oral Surgery Procedures etc.
-                            </p>
                             <h4>Services</h4>
                             <ul>
-                                <li>Endrocology And laser Surgery</li>
-                                <li>Endrocology</li>
-                                <li>Endrocology And laser</li>
-                                <li>Endrocology And laser Surgery</li>
-                                
+                                {data[0]?.services?.map((service) => 
+                                    <li>{service}</li>
+                                )}
                             </ul>
 
                             <h4>Qualifications</h4>
                             <ul>
-                                <li>KATH</li>
-                                <li>KBTH</li>
+                                {data[0]?.qualifications?.map((qualification) =>
+                                    <li>{qualification}</li>
+                                )}
                             </ul>
 
                             <h4>specialities</h4>
                             <ul>
-                                <li>Radiology Radiology</li>
-                                <li>Radiology Radiology Radiology</li>
-                                <li>Radiology </li>
-                                <li>Radiology </li>
-                                <li>Radiology Radiology</li>
+                                {data[0]?.specialities?.map((speciality) =>
+                                    <li>{speciality}</li>
+                                )}
                             </ul>
 
                         </div>
