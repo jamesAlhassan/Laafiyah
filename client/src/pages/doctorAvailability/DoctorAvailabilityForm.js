@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import './DoctorAvailabilityForm.css';
+import newRequest from '../../utils/newRequest';
+import { useParams } from 'react-router-dom';
 
 function DoctorAvailabilityForm() {
   const [availability, setAvailability] = useState([]); // Store availability data
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [timeSlot, setTimeSlot] = useState('');
+
+  const { id } = useParams();
 
   const handleAddTimeSlot = () => {
     if (timeSlot.trim() !== '') {
@@ -15,13 +19,35 @@ function DoctorAvailabilityForm() {
         // Day already exists, update its slots
         const updatedAvailability = [...availability];
 
-        if (updatedAvailability[existingDayIndex].slots.indexOf(timeSlot) === -1) {
-          updatedAvailability[existingDayIndex].slots.push(timeSlot);
-          setAvailability(updatedAvailability);
+        if (updatedAvailability[existingDayIndex].timeslots.indexOf(timeSlot) === -1) {
+          updatedAvailability[existingDayIndex].timeslots.push(timeSlot);
+
+          // Define the order of days of the week
+          const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+          // Create an array to store the days and timeslots
+          const sortedSchedule = [];
+          // Sort the schedule by day based on the order defined
+          updatedAvailability.forEach(item => {
+            const day = item.day;
+            const slots = item.timeslots;
+            // Sort timeslots for each day
+            slots.sort();
+            // Push the day and sorted timeslots to the sortedSchedule array
+            sortedSchedule.push({
+              "day": day,
+              "timeslots": slots
+            });
+          });
+
+          // Sort the sortedSchedule array based on the custom order
+          sortedSchedule.sort((a, b) => {
+            return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
+          });
+          setAvailability(sortedSchedule);
         }
       } else {
         // Day doesn't exist, create a new entry
-        setAvailability([...availability, { day: selectedDay, slots: [timeSlot] }]);
+        setAvailability([...availability, { day: selectedDay, timeslots: [timeSlot] }]);
       }
 
       setTimeSlot('');
@@ -35,18 +61,36 @@ function DoctorAvailabilityForm() {
     if (dayIndex !== -1) {
       const updatedAvailability = [...availability];
 
-      const updatedSlots = availability[dayIndex].slots.filter((item) => item !== slot);
-      updatedAvailability[dayIndex].slots = updatedSlots;
+      const updatedSlots = availability[dayIndex].timeslots.filter((item) => item !== slot);
+      updatedAvailability[dayIndex].timeslots = updatedSlots;
 
       // if slots are empty, remove day
-      if (updatedAvailability[dayIndex].slots.length === 0) handleDeleteDay(day);
+      if (updatedAvailability[dayIndex].timeslots.length === 0) handleDeleteDay(day);
       else setAvailability(updatedAvailability);
     }
   };
 
-  const handleFinish = () => {
-    // You can send the availability data to your backend API here
-    console.log('Availability Data:', availability);
+  const handleFinish = async () => {
+    // add availability to the backend
+    const newAvailability = {
+      availability
+    }
+
+    console.log('newAvailabilit: ', newAvailability)
+
+    try {
+      await newRequest.post(`/availability/${id}`, { availability })
+        .then((res) => {
+          console.log('availability added');
+
+          console.log(res.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleDeleteDay = (dayToRemove) => {
@@ -102,7 +146,7 @@ function DoctorAvailabilityForm() {
                 </button>
               </p>
               <ul>
-                {item.slots.map((slot, index) => (
+                {item.timeslots.map((slot, index) => (
                   <li key={index}>
                     {slot}
                     <button
