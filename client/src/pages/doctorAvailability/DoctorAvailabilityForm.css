@@ -1,0 +1,198 @@
+/* Availability form container */
+.availability-form {
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 0px;
+}
+
+.container form {
+    padding: 50px;
+    border: 1px solid #ddd;
+    background-color: #e2dfdf;
+}
+
+/* Form group style */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label style */
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Dropdown select style */
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+}
+
+/* Input and button style */
+input[type="text"],
+input[type="time"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+/* Time slot input style */
+.time-slot-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Time slot buttons style */
+button[type="button"] {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Time slot buttons hover effect */
+button[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+/* Saved availability section */
+.saved-availability {
+    padding: 20px;
+    width: 100%;
+}
+
+
+/* List style for saved availability */
+.saved-availability ul {
+    display: inline-flex;
+    padding: 10px;
+    flex-wrap: wrap;
+    margin: 0px;
+    gap: 10px;
+}
+
+.saved-availability li {
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+/* Edit and delete buttons style */
+li button[type="button"] {
+    background-color: #ff6347;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Edit and delete buttons hover effect */
+li button[type="button"]:hover {
+    background-color: #d32f2f;
+}
+
+.saved-availability .availability-item {
+    border: 1px #ccc solid;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px;
+    width: 100%;
+}
+
+.saved-availability .availability-item p {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0px;
+    gap: 10px;
+    font-size: 20px;
+}
+
+/* Add these CSS styles to your application's stylesheet */
+
+/* Modal overlay (background) */
+.ReactModal__Overlay {
+    width: 600px;
+    margin: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    /* Ensure it's above other elements */
+}
+
+/* Modal content */
+.ReactModal__Content {
+    position: relative;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: auto;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+}
+
+.modal-ul {
+    /* background-color: red; */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0px;
+}
+
+.modal-ul p {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    padding: 10px;
+    flex-wrap: nowrap;
+}
+
+/* Close button style (optional) */
+.modal-close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+    padding: 5px;
+}
+
+/* Close button hover effect (optional) */
+.modal-close-button:hover {
+    color: #ff6347;
+    /* Change color on hover */
+}
