@@ -3,21 +3,6 @@ const { UnauthenticatedError, BadRequestError, NotFoundError } = require('../err
 const Availability = require('../models/availability.model');
 const Doctor = require('../models/doctor.model');
 
-// const createDoctorAvailab = async (doctorId, date, startTime, endTime) => {
-//   const availability = new Availability({
-//     doctor: doctorId,
-//     availability: [
-//       {
-//         dayOfWeek: date,
-//         startTime,
-//         endTime,
-//       },
-//     ],
-//   });
-//   await availability.save();
-//   return availability;
-// };
-
 const createAvailability = async (req, res) => {
 
   const { id, role } = req.user;
@@ -44,7 +29,8 @@ const getAvailabilities = async (req, res) => {
   try {
     const availability = await Availability.findOne({ doctor: doctorId });
 
-    if (!availability) throw new NotFoundError('No availability found for the doctor');
+    // send empty response if doctor has no availability
+    if (!availability) res.status(StatusCodes.OK).json([]);
 
     res.status(StatusCodes.OK).json(availability);
   } catch (error) {
