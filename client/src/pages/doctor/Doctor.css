@@ -4,7 +4,7 @@
     background-color: #C0C0C0;
 }
 
-.container {
+.doctor .container {
     width: auto;
     padding: 30px 50px;
     display: flex;
@@ -38,6 +38,14 @@
     display: list-item;
     list-style: circle;
     list-style: disc inside none;
+}
+
+.left .reviews ul{
+    display: block;
+}
+
+.left .reviews ul li{
+    display: block;
 }
 
 .right {
