@@ -17,7 +17,7 @@ const addPatient = async (req, res) => {
     req.body.user = id;
 
     // convert date from postman
-    req.body.dob = new Date(req.body.dob);
+    req.body.dateOfBirth = new Date(req.body.dateOfBirth);
     const patient = await Patient.create(req.body);
     res.status(StatusCodes.CREATED).json({ patient });
 }

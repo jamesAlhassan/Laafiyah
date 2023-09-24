@@ -22,13 +22,13 @@ const PatientSchema = new mongoose.Schema({
     phoneNumber: {
         type: String,
         required: [true, 'Please provide phone number'],
-        match: [
-            /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-            'Please provide a valid phone number',
-        ],
+        // match: [
+        //     /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+        //     'Please provide a valid phone number',
+        // ],
         unique: true,
     },
-    dob: {
+    dateOfBirth: {
         type: Date,
         required: [true, 'please enter your date of birth']
     },

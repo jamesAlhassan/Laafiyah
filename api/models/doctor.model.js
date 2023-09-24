@@ -7,6 +7,10 @@ const DoctorSchema = new mongoose.Schema({
         required: [true, 'Please provide a user'],
         unique: true,
     },
+    title: {
+        type: String,
+        maxlength: 10
+    },
     firstName: {
         type: String,
         required: [true, 'please provide a name'],
@@ -19,16 +23,7 @@ const DoctorSchema = new mongoose.Schema({
         maxlength: 50,
         minlength: 3,
     },
-    phoneNumber: {
-        type: String,
-        required: [true, 'Please provide phone number'],
-        match: [
-            /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
-            'Please provide a valid phone number',
-        ],
-        unique: true,
-    },
-    dob: {
+    dateOfBirth: {
         type: Date,
         required: [true, 'please enter your date of birth']
     },
@@ -40,21 +35,40 @@ const DoctorSchema = new mongoose.Schema({
             message: 'please select a valid gender'
         }
     },
+    phoneNumber: {
+        type: String,
+        required: [true, 'Please provide phone number'],
+        // match: [
+        //     /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im,
+        //     'Please provide a valid phone number',
+        // ],
+        unique: true,
+    },
     location: {
         type: String,
         required: [true, 'please enter your location']
     },
-    specialty: {
-        type: String,
-        default: 'NA',
+    specialities: {
+        type: [String],
+    },
+    services: {
+        type: [String],
+    },
+    qualifications: {
+        type: [String],
+        required: [true, 'please provide a qualification'],
     },
     licenseNumber: {
         type: String,
         required: [true, 'Please provide your license number'],
+        unique: true
     },
     hospitalAffiliation: {
         type: String,
         required: [true, 'Please provide your hospital affiliation'],
+    },
+    about: {
+        type: String,
     },
     createdAt: {
         type: Date,
