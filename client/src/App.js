@@ -10,6 +10,7 @@ import Doctor from "./pages/doctor/Doctor";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DoctorAvailabilityForm from "./pages/doctorAvailability/DoctorAvailabilityForm";
+import DoctorDashboard from "./pages/doctorDashboard/DoctorDashboard";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => {
             <Route path='alldoctors' element={<AllDoctors />} />
             <Route path='doctor/:id' element={<Doctor />} />
             <Route path='/availability/:id' element={<DoctorAvailabilityForm />} />
+            <Route path="/doctordashboard" element={<DoctorDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>
