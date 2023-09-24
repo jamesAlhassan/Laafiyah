@@ -11,15 +11,17 @@ const Dashboard = () => {
         <a href='#' class='btn-appointment'>
           Make an appointment
         </a>
-        <div class='profile'>
-          <div class='image'>
-            <img src={profile_pic} />
-            <div class='notification'></div>
-          </div>
 
-          <select>
+        <div class='profile'>
+          <Link to='/'>
+            <div class='image'>
+              <img src={profile_pic} />
+            </div>
+          </Link>
+          {/* <select>
             <option value='John Doe'>John Doe</option>
-          </select>
+            <option value='update'></option>
+          </select> */}
         </div>
       </header>
       <aside class='aside'>
