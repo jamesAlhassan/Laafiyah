@@ -27,9 +27,7 @@ const DoctorDashboard = () => {
     }
 
     const contentMap = {
-        Availability: <AvailabilityList
-            handleOptionClick={handleOptionClick}
-            handleAvailabilities={handleAvailabilities} />,
+        Availability: <DoctorAvailabilityForm />,
         EditAvailability: <DoctorAvailabilityForm
             handleOptionClick={handleOptionClick}
             availabilities={availability} />,
@@ -83,76 +81,6 @@ const DoctorDashboard = () => {
                 {contentMap[selectedOption]}
             </main>
         </div>
-
-
-
-
-
-
-
-
-        // <div className="doctor-dashboard">
-        //     {/* Sidebar */}
-        //     <div className="sidebar">
-        //         <h2>Sidebar</h2>
-        //         <ul>
-        //             <li
-        //                 className={selectedOption === 'Dashboard' ? 'active' : ''}
-        //                 onClick={() => handleOptionClick('Dashboard')}
-        //             >
-        //                 Dashboard
-        //             </li>
-        //             <li
-        //                 className={selectedOption === 'Profile' ? 'active' : ''}
-        //                 onClick={() => handleOptionClick('Profile')}
-        //             >
-        //                 Profile
-        //             </li>
-        //             <li
-        //                 className={selectedOption === 'Settings' ? 'active' : ''}
-        //                 onClick={() => handleOptionClick('Settings')}
-        //             >
-        //                 Settings
-        //             </li>
-        //             <li
-        //                 className={selectedOption === 'Messages' ? 'active' : ''}
-        //                 onClick={() => handleOptionClick('Messages')}
-        //             >
-        //                 Messages
-        //             </li>
-        //         </ul>
-        //     </div>
-
-        //     {/* Content */}
-        //     <div className="content">
-        //         <h2>{selectedOption}</h2>
-        //         <div className="dashboard-section">
-        //             <h2>Appointments</h2>
-        //             <AppointmentList appointments={appointments} />
-        //         </div>
-
-        //         <div className="dashboard-section">
-        //             <h2>Availability</h2>
-        //             <AvailabilityCalendar availability={availability} />
-        //         </div>
-        //     </div>
-        // </div>
-
-
-
-        // <div className="doctor-dashboard">
-        //     <h1>Doctor Dashboard</h1>
-
-        //     <div className="dashboard-section">
-        //         <h2>Appointments</h2>
-        //         <AppointmentList appointments={appointments} />
-        //     </div>
-
-        //     <div className="dashboard-section">
-        //         <h2>Availability</h2>
-        //         <AvailabilityCalendar availability={availability} />
-        //     </div>
-        // </div>
     );
 }
 

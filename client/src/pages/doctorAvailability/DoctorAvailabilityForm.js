@@ -6,6 +6,7 @@ function DoctorAvailabilityForm() {
   const [availability, setAvailability] = useState([]); // Store availability data
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [timeSlot, setTimeSlot] = useState('');
+  const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
     // Fetch availability data from the database when the component mounts
@@ -13,6 +14,8 @@ function DoctorAvailabilityForm() {
       try {
         const response = await newRequest.get('/availability/650c91445b7123e150ec28de');
         const fetchedAvailability = response.data.availability || [];
+
+        if(fetchedAvailability.length == 0) setIsEmpty(true);
 
         // Sort and set the fetched availability
         setAvailability(sortAvailability(fetchedAvailability));
@@ -92,8 +95,9 @@ function DoctorAvailabilityForm() {
       availability
     };
 
+    console.log(newAvailability)
     try {
-      if (availability.length === 0) {
+      if (isEmpty) {
         // No data exists, use POST to create new availability
         await newRequest.post('/availability/650c91445b7123e150ec28de', newAvailability);
         console.log('Availability created');
