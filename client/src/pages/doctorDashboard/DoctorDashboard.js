@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import AppointmentList from './AppointmentList';
-import AvailabilityList from './AvailabilityList';
 import './DoctorDashboard.css';
 import { AiFillPlusCircle } from "react-icons/ai";
 import { FaFolder } from "react-icons/fa";
@@ -9,7 +8,6 @@ import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm
 
 const DoctorDashboard = () => {
     const [appointments, setAppointments] = useState([]);
-    const [availability, setAvailability] = useState([]);
     const [selectedOption, setSelectedOption] = useState('Dashboard');
 
     const appointmentData = [
@@ -18,19 +16,12 @@ const DoctorDashboard = () => {
         // Add more appointments
     ];
 
-    const handleAvailabilities = (data) => {
-        setAvailability(data);
-    }
-
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     }
 
     const contentMap = {
         Availability: <DoctorAvailabilityForm />,
-        EditAvailability: <DoctorAvailabilityForm
-            handleOptionClick={handleOptionClick}
-            availabilities={availability} />,
         Appointment: <AppointmentList appointments={appointmentData} />,
         // Dashboard: <DashboardContent />,
         // Profile: <ProfileContent />,
