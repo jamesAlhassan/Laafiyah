@@ -5,6 +5,7 @@ import { AiFillPlusCircle } from "react-icons/ai";
 import { FaFolder } from "react-icons/fa";
 import { BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
+import DoctorProfile from './DoctorProfile';
 
 const DoctorDashboard = () => {
     const [appointments, setAppointments] = useState([]);
@@ -22,6 +23,7 @@ const DoctorDashboard = () => {
 
     const contentMap = {
         Availability: <DoctorAvailabilityForm />,
+        Profile: <DoctorProfile />,
         Appointment: <AppointmentList appointments={appointmentData} />,
         // Dashboard: <DashboardContent />,
         // Profile: <ProfileContent />,
@@ -50,7 +52,7 @@ const DoctorDashboard = () => {
 
 
                     <li className={selectedOption === 'Profile' ? 'active' : ''}
-                        title='View all doctors'
+                        title='Profile'
                         onClick={() => handleOptionClick('Profile')}>
                         <BsFillPeopleFill />
                     </li>
