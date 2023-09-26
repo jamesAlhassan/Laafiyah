@@ -1,0 +1,27 @@
+.appointment-list {
+  border: 1px solid #ccc;
+  padding: 16px;
+  margin: 16px;
+  background-color: #f9f9f9;
+}
+
+.appointment-list ul {
+  list-style: none;
+  padding: 0;
+  gap: 1rem;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #ddd;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+
+span {
+  flex: 1;
+}

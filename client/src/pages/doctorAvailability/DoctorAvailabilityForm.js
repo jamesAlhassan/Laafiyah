@@ -1,52 +1,72 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './DoctorAvailabilityForm.css';
 import newRequest from '../../utils/newRequest';
-import { useParams } from 'react-router-dom';
 
 function DoctorAvailabilityForm() {
   const [availability, setAvailability] = useState([]); // Store availability data
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [timeSlot, setTimeSlot] = useState('');
+  const [isEmpty, setIsEmpty] = useState(false);
 
-  const { id } = useParams();
+  useEffect(() => {
+    // Fetch availability data from the database when the component mounts
+    const fetchAvailability = async () => {
+      try {
+        const response = await newRequest.get('/availability/650c91445b7123e150ec28de');
+        const fetchedAvailability = response.data.availability || [];
+
+        if(fetchedAvailability.length == 0) setIsEmpty(true);
+
+        // Sort and set the fetched availability
+        setAvailability(sortAvailability(fetchedAvailability));
+      } catch (error) {
+        console.error('Error fetching availability:', error);
+      }
+    };
+
+    fetchAvailability();
+  }, []);
+
+  function sortAvailability(data) {
+    const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    // Sort the data by day based on the custom order
+    data.sort((a, b) => {
+      return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
+    });
+
+    return data;
+  }
 
   const handleAddTimeSlot = () => {
     if (timeSlot.trim() !== '') {
-      // Check if the day already exists in the availability array
       const existingDayIndex = availability.findIndex((item) => item.day === selectedDay);
 
       if (existingDayIndex !== -1) {
-        // Day already exists, update its slots
         const updatedAvailability = [...availability];
 
         if (updatedAvailability[existingDayIndex].timeslots.indexOf(timeSlot) === -1) {
           updatedAvailability[existingDayIndex].timeslots.push(timeSlot);
 
-          // Define the order of days of the week
           const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-          // Create an array to store the days and timeslots
           const sortedSchedule = [];
-          // Sort the schedule by day based on the order defined
+
           updatedAvailability.forEach(item => {
             const day = item.day;
             const slots = item.timeslots;
-            // Sort timeslots for each day
             slots.sort();
-            // Push the day and sorted timeslots to the sortedSchedule array
             sortedSchedule.push({
               "day": day,
               "timeslots": slots
             });
           });
 
-          // Sort the sortedSchedule array based on the custom order
           sortedSchedule.sort((a, b) => {
             return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
           });
           setAvailability(sortedSchedule);
         }
       } else {
-        // Day doesn't exist, create a new entry
         setAvailability([...availability, { day: selectedDay, timeslots: [timeSlot] }]);
       }
 
@@ -71,27 +91,36 @@ function DoctorAvailabilityForm() {
   };
 
   const handleFinish = async () => {
-    // add availability to the backend
     const newAvailability = {
       availability
+    };
+
+    console.log(newAvailability)
+    try {
+      if (isEmpty) {
+        // No data exists, use POST to create new availability
+        await newRequest.post('/availability/650c91445b7123e150ec28de', newAvailability);
+        console.log('Availability created');
+      } else {
+        // Data already exists, use PATCH to update it
+        await newRequest.patch('/availability/650c91445b7123e150ec28de', newAvailability);
+        console.log('Availability updated');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
 
-    console.log('newAvailabilit: ', newAvailability)
-
-    try {
-      await newRequest.post(`/availability/${id}`, { availability })
-        .then((res) => {
-          console.log('availability added');
-
-          console.log(res.data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log(error);
+    // If all time slots are deleted, remove data from the database
+    if (availability.every((day) => day.timeslots.length === 0)) {
+      try {
+        await newRequest.delete('/availability/650c91445b7123e150ec28de');
+        console.log('Availability deleted');
+      } catch (error) {
+        console.error('Error deleting availability:', error);
+      }
     }
   };
+
 
   const handleDeleteDay = (dayToRemove) => {
     const updatedAvailability = availability.filter((item) => item.day !== dayToRemove);
@@ -137,31 +166,48 @@ function DoctorAvailabilityForm() {
         </form>
         <div className="saved-availability">
           <h4>Availabilities:</h4>
-          {availability?.map((item) => (
-            <div className='availability-item' key={item.day}>
-              <p>
-                {item.day}:
-                <button type="button" onClick={() => handleDeleteDay(item.day)}>
-                  Delete
-                </button>
-              </p>
-              <ul>
-                {item.timeslots.map((slot, index) => (
-                  <li key={index}>
-                    {slot}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleRemoveTimeSlot(item.day, slot);
-                      }}
-                    >
-                      X
-                    </button>
-                  </li>
+          {availability?.length > 0 ? (
+            <table>
+              <thead>
+                <tr>
+                  <th>Day</th>
+                  <th>Time Slots</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {availability.map((item) => (
+                  <tr key={item.day}>
+                    <td>{item.day}</td>
+                    <td>
+                      <ul>
+                        {item.timeslots.map((slot, index) => (
+                          <li key={index}>{slot}<button
+                            type="button"
+                            onClick={() => {
+                              handleRemoveTimeSlot(item.day, slot);
+                            }}
+                          >
+                            X
+                          </button></li>
+                        ))}
+                      </ul>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteDay(item.day)}
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
                 ))}
-              </ul>
-            </div>
-          ))}
+              </tbody>
+            </table>
+          ) : (
+            <p>No availability data.</p>
+          )}
         </div>
       </div>
     </div>

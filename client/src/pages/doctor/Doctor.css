@@ -4,7 +4,7 @@
     background-color: #C0C0C0;
 }
 
-.container {
+.doctor .container {
     width: auto;
     padding: 30px 50px;
     display: flex;
@@ -40,12 +40,20 @@
     list-style: disc inside none;
 }
 
+.left .reviews ul{
+    display: block;
+}
+
+.left .reviews ul li{
+    display: block;
+}
+
 .right {
     flex: 1;
     padding: 20px;
 }
 
-.right .booking {
+.right .booking-options {
     padding: 10px;  
     margin: 0 auto;
     padding: 20px;
@@ -56,7 +64,7 @@
     overflow: hidden;
 }
 
-.right .booking button {
+.right .booking-options button {
     font-weight: 500;
     font-size: 18px;
     padding: 8px;
