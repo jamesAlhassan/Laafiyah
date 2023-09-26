@@ -76,7 +76,7 @@ const Doctor = () => {
                         </div>
 
                         <div className="right">
-                            <div className='booking'>
+                            <div className='booking-options'>
                                 <h4>Booking</h4>
                                 <button>Video Consultation</button>
                                 <button>Chat Physician</button>
