@@ -1,0 +1,31 @@
+.booking {
+    display: flex;
+    justify-content: center;
+    background-color: #C0C0C0;
+    padding: 20px;
+}
+
+.booking .booking-container {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+    padding: 30px 50px;
+    gap: 20px;
+    min-width: 800px;
+}
+
+.booking .introInfo,
+.booking .saved-availability,
+.booking .review-container {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.booking .review-container ul,
+.booking ul li{
+    display: block;
+}
