@@ -1,0 +1,21 @@
+.confirm-booking {
+    display: flex;
+    justify-content: flex-start;
+    background-color: #C0C0C0;
+    padding: 20px 50px;
+}
+
+.confirm-booking .confirm-booking-container {
+    display: flex;
+    width: auto;
+    gap: 50px;
+}
+
+.confirm-booking .confirm-booking-container .booking-details {
+    border-radius: 10px;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
