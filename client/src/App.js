@@ -19,7 +19,7 @@ const App = () => {
   const queryClient = new QueryClient();
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
@@ -32,11 +32,12 @@ const App = () => {
             <Route path='alldoctors' element={<AllDoctors />} />
             <Route path='doctor/:id' element={<Doctor />} />
             <Route path="/doctordashboard" element={<DoctorDashboard />} />
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/confirmbooking" element={<ConfirmBooking />} />
           </Route>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
-    </>
   );
 };
 
