@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DoctorAvailabilityForm.css';
 import newRequest from '../../utils/newRequest';
 
-function DoctorAvailabilityForm() {
+function DoctorAvailabilityForm({ doctorId }) {
   const [availability, setAvailability] = useState([]); // Store availability data
   const [selectedDay, setSelectedDay] = useState('Monday');
   const [timeSlot, setTimeSlot] = useState('');
@@ -12,7 +12,8 @@ function DoctorAvailabilityForm() {
     // Fetch availability data from the database when the component mounts
     const fetchAvailability = async () => {
       try {
-        const response = await newRequest.get('/availability/650c91445b7123e150ec28de');
+        console.log(doctorId)
+        const response = await newRequest.get(`/availability/${doctorId}`);
         const fetchedAvailability = response.data.availability || [];
 
         if(fetchedAvailability.length == 0) setIsEmpty(true);
@@ -95,15 +96,14 @@ function DoctorAvailabilityForm() {
       availability
     };
 
-    console.log(newAvailability)
     try {
       if (isEmpty) {
         // No data exists, use POST to create new availability
-        await newRequest.post('/availability/650c91445b7123e150ec28de', newAvailability);
+        await newRequest.post(`/availability/${doctorId}`, newAvailability);
         console.log('Availability created');
       } else {
         // Data already exists, use PATCH to update it
-        await newRequest.patch('/availability/650c91445b7123e150ec28de', newAvailability);
+        await newRequest.patch(`/availability/${doctorId}`, newAvailability);
         console.log('Availability updated');
       }
     } catch (error) {
@@ -113,7 +113,7 @@ function DoctorAvailabilityForm() {
     // If all time slots are deleted, remove data from the database
     if (availability.every((day) => day.timeslots.length === 0)) {
       try {
-        await newRequest.delete('/availability/650c91445b7123e150ec28de');
+        await newRequest.delete(`/availability/${doctorId}`);
         console.log('Availability deleted');
       } catch (error) {
         console.error('Error deleting availability:', error);
