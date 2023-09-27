@@ -27,7 +27,8 @@ const getAvailabilities = async (req, res) => {
   const { doctorId } = req.params;
 
   try {
-    const availability = await Availability.findOne({ doctor: doctorId });
+    const availability = await Availability.findOne({ doctor: doctorId })
+      .populate('doctor').exec();
 
     // send empty response if doctor has no availability
     if (!availability) res.status(StatusCodes.OK).json([]);
