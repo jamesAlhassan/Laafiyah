@@ -1,12 +1,34 @@
+import { useState } from "react";
 import proPic from "../../assets/proPic.png";
 const Profile = () => {
+  const [file, setFile] = useState();
+
+  const handleFile = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+    formData.append("file", file);
+    fetch("url", {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log("success", result);
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
+  };
   return (
     <div>
       <div class='wrapper'>
         <div class='pro'>
           <div class='content'>
             <h1>Edit Profile</h1>
-            <form action=''>
+            <form onSubmit={handleSubmit}>
               {/* <!-- Photo --> */}
               <fieldset>
                 <div class='grid-35'>
@@ -14,7 +36,12 @@ const Profile = () => {
                 </div>
                 <div class='grid-65'>
                   <span class='photo' title='Upload your Avatar!'></span>
-                  <input type='file' class='btn' />
+                  <input
+                    type='file'
+                    class='btn'
+                    name='file'
+                    onChange={handleFile}
+                  />
                 </div>
               </fieldset>
               <fieldset>
