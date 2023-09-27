@@ -27,7 +27,7 @@ const DoctorDashboard = () => {
     const contentMap = {
         Availability: <DoctorAvailabilityForm doctorId={doctorId} />,
         Profile: <DoctorProfile />,
-        Appointment: <AppointmentList appointments={appointmentData} />,
+        Appointment: <AppointmentList doctorId={doctorId} />,
         // Dashboard: <DashboardContent />,
         // Profile: <ProfileContent />,
         // Settings: <SettingsContent />,
