@@ -1,93 +1,109 @@
-import { useQuery } from "@tanstack/react-query";
-import newRequest from "../../utils/newRequest";
+import React, { useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import newRequest from '../../utils/newRequest';
 import DoctorSummary from '../../components/doctorSummary/DoctorSummary';
 import './Doctor.css';
 import Review from '../../components/review/Review';
-import { useEffect } from 'react';
-import { useParams } from "react-router-dom";
 
 const Doctor = () => {
+  const { id } = useParams();
 
-    const { id } = useParams();
+  useEffect(() => {
+    // Scroll to the top on page load
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+  }, [id]);
 
-    useEffect(() => {
-        // 👇️ scroll to top on page load
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }, []);
+  const { isLoading, error, data } = useQuery(
+    ['getDoctor', id],
+    () =>
+      newRequest
+        .get(`/doctor/${id}`)
+        .then((res) => res.data)
+  );
 
-    const { isLoading, error, data, refetch } = useQuery({
-        queryKey: [],
-        queryFn: () =>
-            newRequest.get(
-                `/doctor/${id}`
-            ).then((res) => {
-                return res.data;
-            }),
-    });
+  const renderDoctorInfo = () => {
+    if (isLoading) {
+      return 'Loading';
+    }
+    if (error) {
+      return 'Something went wrong!';
+    }
+    const doctor = data[0];
 
     return (
-        <div className='doctor'>
-            {isLoading ? ("loading") : error ? ("something went wrong!")
-                : (
-                    <div className='container'>
-                        <div className="left">
-                            <div className='info'>
-                                {data[0] === undefined ? "loading" : (
-                                    <DoctorSummary key={data[0]?._id} doctor={data[0]} />
-                                )}
-                                <div className='moreInfo'>
-                                    <h4>About</h4>
-                                    <p>{data[0]?.about}</p>
+      <div className='container'>
+        <div className='left'>
+          <div className='info'>
+            <DoctorSummary key={doctor?._id} doctor={doctor} />
+            <div className='moreInfo'>
+              <h4>About</h4>
+              <p>{doctor?.about}</p>
 
-                                    <h4>Services</h4>
-                                    <ul>
-                                        {data[0]?.services?.map((service) =>
-                                            <li>{service}</li>
-                                        )}
-                                    </ul>
+              <h4>Services</h4>
+              <ul>
+                {doctor?.services?.map((service) => (
+                  <li key={service}>{service}</li>
+                ))}
+              </ul>
 
-                                    <h4>Qualifications</h4>
-                                    <ul>
-                                        {data[0]?.qualifications?.map((qualification) =>
-                                            <li>{qualification}</li>
-                                        )}
-                                    </ul>
+              <h4>Qualifications</h4>
+              <ul>
+                {doctor?.qualifications?.map((qualification) => (
+                  <li key={qualification}>{qualification}</li>
+                ))}
+              </ul>
 
-                                    <h4>specialities</h4>
-                                    <ul>
-                                        {data[0]?.specialities?.map((speciality) =>
-                                            <li>{speciality}</li>
-                                        )}
-                                    </ul>
+              <h4>Specialities</h4>
+              <ul>
+                {doctor?.specialities?.map((speciality) => (
+                  <li key={speciality}>{speciality}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
 
-                                </div>
-                            </div>
-
-                            <div className="reviews">
-                                <h3>Reviews</h3>
-                                <ul>
-                                    <li><Review /></li>
-                                    <li><Review /></li>
-                                    <li><Review /></li>
-                                    <li><Review /></li>
-                                    <li><Review /></li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <div className="right">
-                            <div className='booking-options'>
-                                <h4>Booking</h4>
-                                <button>Video Consultation</button>
-                                <button>Chat Physician</button>
-                                <button>Book Appointment</button>
-                            </div>
-                        </div>
-                    </div>
-                )}
+          <div className='reviews'>
+            <h3>Reviews</h3>
+            <ul>
+              <li>
+                <Review />
+              </li>
+              <li>
+                <Review />
+              </li>
+              <li>
+                <Review />
+              </li>
+              <li>
+                <Review />
+              </li>
+              <li>
+                <Review />
+              </li>
+            </ul>
+          </div>
         </div>
-    );
 
-}
+        <div className='right'>
+          <div className='booking-options'>
+            <h4>Booking</h4>
+            <button>Video Consultation</button>
+            <button>Chat Physician</button>
+            <Link to={`/booking/${doctor._id}`}>
+              <button>Book Appointment</button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className='doctor'>
+      {renderDoctorInfo()}
+    </div>
+  );
+};
 
 export default Doctor;

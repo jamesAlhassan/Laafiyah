@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const AppointmentSchema = new mongoose.Schema({
-    patientRef: {
+    patient: {
         type: mongoose.Types.ObjectId,
         ref: 'Patient',
         required: [true, 'should include a patient']
     },
-    doctorRef: {
+    doctor: {
         type: mongoose.Types.ObjectId,
         ref: 'Doctor',
         required: [true, 'should include a doctor']
@@ -17,14 +17,22 @@ const AppointmentSchema = new mongoose.Schema({
             'no_show', 'review', 'follow_up'],
         default: 'pending'
     },
-    appointmentDateTime: {
-        type: Date,
-        required: [true, 'please select a valid date']
+    // appointmentDateTime: {
+    //     type: Date,
+    //     required: [true, 'please select a valid date']
+    // },
+    day: {
+        type: String,
+        require: true
     },
-    duration: {
-        type: Number,
-        default: '2'
+    time: {
+        type: String,
+        require: true,
     },
+    // duration: {
+    //     type: Number,
+    //     default: '2'
+    // },
     notes: {
         type: String,
         required: false

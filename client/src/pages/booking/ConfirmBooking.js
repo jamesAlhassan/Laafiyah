@@ -1,66 +1,56 @@
+import { useLocation } from "react-router-dom";
 import DoctorSummary from "../../components/doctorSummary/DoctorSummary";
 import './ConfirmBooking.css';
+import { useEffect, useState } from "react";
+import newRequest from "../../utils/newRequest";
 
 const ConfirmBooking = () => {
-    const doctorData = {
-        "_id": {
-            "$oid": "65110e1049d46e1d383e6a76"
-        },
-        "user": {
-            "$oid": "65110e1049d46e1d383e6a73"
-        },
-        "title": "Dr ",
-        "firstName": "Barbara",
-        "lastName": "Nixon",
-        "dateOfBirth": {
-            "$date": "2012-12-13T00:00:00.000Z"
-        },
-        "gender": "female",
-        "phoneNumber": "+1 (823) 443-2697",
-        "location": "Expedita ut magnam v",
-        "specialities": [
-            "Qui",
-            "quia",
-            "quisquam",
-            "do"
-        ],
-        "services": [
-            "Quae omnis et beatae",
-            "Quae omnis et beatae",
-            "Quae omnis et beatae",
-            "Quae omnis et beatae"
-        ],
-        "qualifications": [
-            "Adipisicing",
-            "consecte"
-        ],
-        "licenseNumber": "295",
-        "hospitalAffiliation": "Natus quasi quas max",
-        "about": "Id explicabo Ducimu Quae omnis et beatae Quae omnis et beatae Quae omnis et beatae Quae omnis et beataeQuae omnis et beataeQuae omnis et beatae Quae omnis et beatae",
-        "createdAt": {
-            "$date": "2023-09-25T04:33:47.937Z"
-        },
-        "updatedAt": {
-            "$date": "2023-09-25T04:33:47.937Z"
-        },
-        "__v": 0
+
+    const [phone, setPhone] = useState('');
+    const [notes, setNotes] = useState('');
+    const location = useLocation();
+    const { appointment, doctor } = location.state || {};
+
+    const handleContinue = async (e) => {
+        e.preventDefault();
+
+        // add appointment to database
+        try {
+            const finalAppointment = ({
+                doctor: doctor._id,
+                status: "pending",
+                day: appointment.day,
+                time: appointment.time,
+                notes
+            });
+
+            await newRequest.post('/appointment', { ...finalAppointment })
+                .then((res) => {
+                    console.log('Appointment added successfully');
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } catch (error) {
+            console.log(error);
+        }
+
+        console.log("phone: ", phone);
+        console.log("notes: ", notes);
     }
 
-    const handleContinue = (e) => {
-        console.log("Continue my friend");
-    }
     return (
         <div className="confirm-booking">
             <div className="confirm-booking-container">
                 <div className="booking-details">
                     <li><h4>In Clinic Appointment</h4></li>
                     <li>
-                        <p>On Monday <br />
+                        <p>On {appointment.day} <br />
                             Change Date & Time</p>
-                        <p>at 5:00PM</p>
+                        <p>at {appointment.time}</p>
                     </li>
                     <li>
-                        <DoctorSummary key={doctorData._id} doctor={doctorData} />
+                        <DoctorSummary key={doctor._id} doctor={doctor} />
                     </li>
                 </div>
 
@@ -74,18 +64,22 @@ const ConfirmBooking = () => {
                             type="text"
                             id="phone"
                             name="phone"
+                            value={phone}
                             placeholder="enter phone number"
+                            onChange={(e) => setPhone(e.target.value)}
                             required
                         />
                         {/* Addtional info */}
-                        <label htmlFor="add-info">Add any addtional information</label>
+                        <label htmlFor="notes">Add any addtional information</label>
                         <textarea
                             type="text"
-                            id="add-info"
-                            name="add-info"
+                            id="notes"
+                            name="notes"
+                            value={notes}
                             rows="8"
                             cols="50"
-                            placeholder='Add any addtional Info'>
+                            placeholder='Add any addtional Info'
+                            onChange={(e) => setNotes(e.target.value)}>
                         </textarea><br />
                         <button type="button" onClick={handleContinue}>
                             Continue
@@ -93,7 +87,7 @@ const ConfirmBooking = () => {
                     </form>
                 </div>
             </div>
-        </div >
+        </div>
     )
 }
 

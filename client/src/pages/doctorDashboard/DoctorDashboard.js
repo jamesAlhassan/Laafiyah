@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import AppointmentList from './AppointmentList';
 import './DoctorDashboard.css';
 import { AiFillPlusCircle } from "react-icons/ai";
@@ -6,8 +6,11 @@ import { FaFolder } from "react-icons/fa";
 import { BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
 import DoctorProfile from './DoctorProfile';
+import { useParams } from "react-router-dom";
 
 const DoctorDashboard = () => {
+    // get doctorId
+    const { doctorId } = useParams();
     const [appointments, setAppointments] = useState([]);
     const [selectedOption, setSelectedOption] = useState('Dashboard');
 
@@ -22,7 +25,7 @@ const DoctorDashboard = () => {
     }
 
     const contentMap = {
-        Availability: <DoctorAvailabilityForm />,
+        Availability: <DoctorAvailabilityForm doctorId={doctorId} />,
         Profile: <DoctorProfile />,
         Appointment: <AppointmentList appointments={appointmentData} />,
         // Dashboard: <DashboardContent />,
@@ -56,7 +59,6 @@ const DoctorDashboard = () => {
                         onClick={() => handleOptionClick('Profile')}>
                         <BsFillPeopleFill />
                     </li>
-
 
                     <li>
                         <BsFillPeopleFill />

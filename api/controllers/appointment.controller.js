@@ -3,14 +3,7 @@ const Appointment = require('../models/appointment.model');
 const Patient = require('../models/patient.model');
 const Doctor = require('../models/doctor.model');
 const { NotFoundError, UnauthenticatedError, BadRequestError } = require('../errors');
-
-// function to generate random date time (for testing only)
-function generateRandomDate(from, to) {
-    return new Date(
-        from.getTime() +
-        Math.random() * (to.getTime() - from.getTime()),
-    );
-}
+const { mongo } = require('mongoose');
 
 // checks if user from the token is the doctor
 async function isDoctor(userId, doctorId) {
@@ -40,10 +33,7 @@ const addAppointment = async (req, res) => {
     if (!patient) throw new NotFoundError('Please register first');
 
     // add patient id to the body
-    req.body.patientRef = patient._id;
-
-    // for testing only: add random date time from today
-    req.body.appointmentDateTime = generateRandomDate(new Date(), new Date(2024, 0, 1));
+    req.body.patient = patient._id;
 
     const appointment = await Appointment.create(req.body);
     res.status(StatusCodes.CREATED).json({ appointment });
@@ -54,8 +44,8 @@ const getAppointment = async (req, res) => {
     const user = req.user;
 
     const appointment = await Appointment.findOne({ _id: req.params.appointmentId })
-        .populate('doctorRef')
-        .populate('patientRef')
+        .populate('doctor')
+        .populate('patient')
         .exec();
 
     if (!appointment) throw new NotFoundError('Appointment not available');
