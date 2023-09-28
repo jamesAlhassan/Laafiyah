@@ -10,7 +10,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  // const [docLogin, setDocLogin] = useState(false);
   const handleChange = (e) => {
     console.log(e.target.name);
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -26,11 +25,7 @@ const Login = () => {
           // store the result in the localStorage of browser
           localStorage.setItem("currentUser", JSON.stringify(res.data));
           // go to the corresponding dashboard
-          if (res.data.user.role === 'doctor') {
-            navigate('/dashboard')
-          } else if (res.data.user.role === 'patient') {
-            navigate('/dashboard');
-          }
+          navigate('/');
         })
         .catch((err) => {
           console.log(err);
