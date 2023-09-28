@@ -7,7 +7,14 @@ const register = async (req, res) => {
 
     const token = user.createJWT();
     res.cookie("accessToken", token);
-    res.status(StatusCodes.CREATED).json({ user: { email: user.email }, token });
+    res.status(StatusCodes.CREATED).json({
+        user: {
+            email: user.email,
+            role: user.role,
+            user: user._id,
+            token
+        }
+    });
 }
 
 const login = async (req, res) => {
