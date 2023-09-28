@@ -28,7 +28,6 @@ const addDoctor = async (req, res) => {
 
 const getDoctor = async (req, res, next) => {
     // get doctor Id from req params (anyone can get a doctor )
-    console.log(req.user)
     const { id } = req.params;
     const doctor = await Doctor.find({ _id: id });
     if (!doctor || doctor.length === 0) {
@@ -39,9 +38,7 @@ const getDoctor = async (req, res, next) => {
 }
 
 const getDoctorByUserId = async (req, res, next) => {
-    console.log("inside getDoctorByUserId")
     try {
-        console.log(req.user)
         // Get user ID from the authenticated user
         const { id } = req.user;
         const doctor = await Doctor.findOne({ user: id });
