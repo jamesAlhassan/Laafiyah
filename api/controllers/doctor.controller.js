@@ -28,6 +28,7 @@ const addDoctor = async (req, res) => {
 
 const getDoctor = async (req, res, next) => {
     // get doctor Id from req params (anyone can get a doctor )
+    console.log(req.user)
     const { id } = req.params;
     const doctor = await Doctor.find({ _id: id });
     if (!doctor || doctor.length === 0) {
@@ -35,6 +36,24 @@ const getDoctor = async (req, res, next) => {
     }
 
     res.status(StatusCodes.OK).json(doctor);
+}
+
+const getDoctorByUserId = async (req, res, next) => {
+    console.log("inside getDoctorByUserId")
+    try {
+        console.log(req.user)
+        // Get user ID from the authenticated user
+        const { id } = req.user;
+        const doctor = await Doctor.findOne({ user: id });
+
+        if (!doctor) {
+            throw new NotFoundError('Doctor not found for this user');
+        }
+        res.status(StatusCodes.OK).json(doctor);
+    } catch (error) {
+        // Pass the error to the error handler middleware
+        next(error);
+    }
 }
 
 const getAllDoctors = async (req, res) => {
@@ -84,4 +103,5 @@ module.exports = {
     getAllDoctors,
     updateDoctor,
     deleteDoctor,
+    getDoctorByUserId,
 }
