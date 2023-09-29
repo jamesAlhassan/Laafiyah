@@ -124,7 +124,7 @@ const getDoctorsAppoinments = async (req, res) => {
     if (!_isDoctor) throw new UnauthenticatedError('You are not authorized to see the appointments');
 
     try {
-        const appointments = await Appointment.find({ doctor: req.params.doctorId });
+        const appointments = await Appointment.find({ doctor: req.params.doctorId }).populate('patient').exec();
         res.status(StatusCodes.OK).send({ appointments, count: appointments.length })
     } catch (error) {
         new BadRequestError(error.message);
