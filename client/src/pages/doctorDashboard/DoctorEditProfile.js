@@ -4,57 +4,16 @@ import newRequest from '../../utils/newRequest';
 import { useNavigate } from 'react-router-dom';
 import MultipleValueFieldData from '../../components/multipleValueField/MultipleValueFieldData';
 
-function DoctorEditProfileForm() {
+function DoctorEditProfileForm({ doctor, goBack }) {
     const [dateOfBirth, setDateOfBirth] = useState(null);
-    const [formData, setFormData] = useState({
-        title: 'Dr.',
-        firstName: 'Alhassan',
-        lastName: 'Abukari',
-        dateOfBirth: '012-12-13T00:00:00.000Z',
-        gender: 'male',
-        phoneNumber: '+2222 225 25 2 5',
-        location: 'Adenta',
-        licenseNumber: '021566',
-        hospitalAffiliation: '37 Military Hospital',
-        about: 'I am a soldier and I am very strong but I am also very quiet and I dont tolerate nonsense',
-        specialities: [
-            "Qui",
-            "quia",
-            "quisquam",
-            "do"
-        ],
-        services: [
-            "Quae omnis et beatae",
-            "Quae omnis et beatae",
-            "Quae omnis et beatae",
-            "Quae omnis et beatae"
-        ],
-        qualifications: [
-            "Adipisicing",
-            "consecte"
-        ],
-    });
+    const [formData, setFormData] = useState(doctor);
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        // Fetch the doctor's existing profile data from the backend
-        const fetchDoctorProfile = async () => {
-            try {
-                const response = await newRequest.get('/doctor/profile'); // Adjust the endpoint
-                const doctorData = response.data;
-
-                // parse the date string from MongoDB into a Date object
-                const dateOfBirthFromMongo = new Date(doctorData.dateOfBirth);
-                setDateOfBirth(dateOfBirthFromMongo);
-
-                setFormData(doctorData); // Populate the form with doctor's data
-            } catch (error) {
-                console.error('Error fetching doctor profile:', error);
-            }
-        };
-
-        fetchDoctorProfile();
+        // parse the date string from MongoDB into a Date object
+        const dateOfBirthFromMongo = new Date(doctor.dateOfBirth);
+        setDateOfBirth(dateOfBirthFromMongo);
     }, []);
 
     const handleInputChange = (e) => {
@@ -72,7 +31,7 @@ function DoctorEditProfileForm() {
             // Make a PUT or PATCH request to update the doctor's profile data
             await newRequest.put('/doctor/profile', formData); // Adjust the endpoint
             console.log('Doctor profile updated successfully');
-            navigate('/dashboard'); // Redirect to the dashboard or profile view
+            navigate('/doctordashboard'); // Redirect to the dashboard or profile view
         } catch (error) {
             console.error('Error updating doctor profile:', error);
         }
@@ -206,8 +165,10 @@ function DoctorEditProfileForm() {
                         </div>
                     </div>
                 </div>
-
-                <button type="submit">Update Profile</button>
+                <div className='bottom'>
+                    <button type="submit">Update Profile</button>
+                    <button onClick={goBack}>Go Back</button>
+                </div>
             </form>
         </div>
     );

@@ -34,7 +34,7 @@ function MultipleValueFieldData({ name, values, setValues }) {
                     <li key={index}>
                         {value}
                         <button type="button" onClick={() => handleRemoveValue(value)}>
-                            Remove
+                            X
                         </button>
                     </li>
                 ))}

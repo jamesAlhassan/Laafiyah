@@ -3,10 +3,8 @@ import './DoctorProfile.css';
 import newRequest from '../../utils/newRequest';
 import { useNavigate } from 'react-router-dom';
 
-function DoctorProfile({ doctor }) {
+function DoctorProfile({ doctor, onEditProfile }) {
     const [dateOfBirth, setDateOfBirth] = useState(null);
-
-    const navigate = useNavigate();
 
     return (
         <div className="doctor-profile-form">
@@ -77,7 +75,7 @@ function DoctorProfile({ doctor }) {
                 </div>
             </div>
 
-            <button onClick={() => navigate('/edit-doctor-profile')}>Edit Profile</button>
+            <button onClick={onEditProfile}>Edit Profile</button>
         </div>
     );
 }
