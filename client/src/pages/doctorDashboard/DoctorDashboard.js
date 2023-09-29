@@ -1,33 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AppointmentList from './AppointmentList';
 import './DoctorDashboard.css';
 import { AiFillPlusCircle } from "react-icons/ai";
 import { FaFolder } from "react-icons/fa";
 import { BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
-import DoctorProfile from './DoctorProfile';
 import { useParams } from "react-router-dom";
+import DoctorProfile from './DoctorProfile';
+import newRequest from '../../utils/newRequest';
 
 const DoctorDashboard = () => {
     // get doctorId
     const { doctorId } = useParams();
-    const [appointments, setAppointments] = useState([]);
     const [selectedOption, setSelectedOption] = useState('Dashboard');
+    const [doctor, setDoctor] = useState({});
 
-    const appointmentData = [
-        { id: 1, patient: 'Patient 1', date: '2023-09-10', time: '10:00 AM' },
-        { id: 2, patient: 'Patient 2', date: '2023-09-11', time: '11:30 AM' },
-        // Add more appointments
-    ];
+    useEffect(() => {
+        getDoctor();
+        console.log(doctor)
+
+    }, []);
+
+    const getDoctor = async () => {
+        try {
+            const res = await newRequest.get('/doctor/user')
+
+            const fetchedDoctor = res.data;
+            setDoctor(fetchedDoctor);
+            console.log("Doctor: ", doctor);
+
+        } catch (error) {
+            console.log('Error getting doctor: ', error);
+        }
+    }
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
     }
 
     const contentMap = {
-        Availability: <DoctorAvailabilityForm doctorId={doctorId} />,
-        Profile: <DoctorProfile />,
-        Appointment: <AppointmentList doctorId={doctorId} />,
+        Availability: <DoctorAvailabilityForm doctorId={doctor._id} />,
+        Profile: <DoctorProfile doctor={doctor} />,
+        Appointment: <AppointmentList doctorId={doctor._id} />,
         // Dashboard: <DashboardContent />,
         // Profile: <ProfileContent />,
         // Settings: <SettingsContent />,
@@ -35,8 +49,8 @@ const DoctorDashboard = () => {
     };
 
     return (
-        <div class='wrapper'>
-            <aside class='aside'>
+        <div className='wrapper'>
+            <aside className='aside'>
                 <ul>
                     <li className='logo hide' title='Add appointment'>
                         <AiFillPlusCircle />
@@ -72,7 +86,7 @@ const DoctorDashboard = () => {
                 </ul>
             </aside>
             <main className='main'>
-                <h3>Welcome Doctor</h3>
+                <h3>Welcome {doctor.firstName} {doctor.lastName}</h3>
                 {contentMap[selectedOption]}
             </main>
         </div>
