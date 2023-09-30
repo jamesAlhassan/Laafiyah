@@ -1,16 +1,21 @@
 import React from 'react';
-import Modal from 'react-modal';
 
-const ConfirmBookingModal = ({ isOpen, onRequestClose, onConfirm }) => {
+const ConfirmBookingModal = ({ onClose }) => {
+
+  // close the modal
+  const handleClose = () => onClose();
+
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Confirmation Modal"
-    >
-      <p>Appointment Successful!</p>
-      <button onClick={() => { onRequestClose(); onConfirm(); }}>OK</button>
-    </Modal>
+    <div className='modal-overlay'>
+      <div className='modal'>
+        <div className='modal-header'>
+          <h4>Booking successful</h4>
+        </div>
+        <div className='modal-body'>
+          <button onClick={handleClose}>Ok</button>
+        </div>
+      </div>
+    </div>
   );
 };
 
