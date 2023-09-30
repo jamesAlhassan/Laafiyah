@@ -1,12 +1,15 @@
 import React, { useState, useRef } from "react";
+import axios from "axios";
 // import "./style.css";
 import uploadImage from "../../assets/uploadImage.png";
 function ImageUpload() {
   const [image, setImage] = useState(null);
+  const [files, setFiles] = useState("");
   const hiddenFileInput = useRef(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    setFiles(file);
     const imgname = event.target.files[0].name;
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -41,29 +44,14 @@ function ImageUpload() {
     };
   };
 
-  const handleUploadButtonClick = (file) => {
-    var myHeaders = new Headers();
-    const token = "adhgsdaksdhk938742937423";
-    myHeaders.append("Authorization", `Bearer ${token}`);
+  const handleUploadButtonClick = () => {
+    const formData = new FormData();
+    formData.append("file", files);
+    formData.append("upload_preset", "ynthoewh");
 
-    var formdata = new FormData();
-    formdata.append("file", file);
-
-    var requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: formdata,
-      redirect: "follow",
-    };
-
-    fetch("https://trickuweb.com/upload/profile_pic", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        console.log(JSON.parse(result));
-        const profileurl = JSON.parse(result);
-        setImage(profileurl.img_url);
-      })
-      .catch((error) => console.log("error", error));
+    axios
+      .post("https://api.cloudinary.com/v1_1/dryweqcbf/image/upload", formData)
+      .then((res) => console.log(res));
   };
 
   const handleClick = (event) => {
@@ -72,26 +60,13 @@ function ImageUpload() {
 
   return (
     <div>
-      <div class='wrapper'>
-        <div class='pro'>
-          <div class='content'>
+      <div className='wrapper'>
+        <div className='pro'>
+          <div className='content'>
             <h1>Edit Profile</h1>
             <form onSubmit={handleUploadButtonClick}>
               {/* <!-- Photo --> */}
               <fieldset>
-                {/* <div class='grid-35'>
-                  <label for='avatar'>Your Photo</label>
-                </div>
-                <div class='grid-65'>
-                  <span class='photo' title='Upload your Avatar!'></span>
-                  <input
-                    type='file'
-                    class='btn'
-                    name='file'
-                    onChange={handleFile}
-                  />
-                </div> */}
-
                 <div className='image-upload-container'>
                   <div className='box-decoration'>
                     <label
@@ -134,52 +109,52 @@ function ImageUpload() {
                 </div>
               </fieldset>
               <fieldset>
-                <div class='grid-35'>
-                  <label for='fname'>First Name</label>
+                <div className='grid-35'>
+                  <label htmlFor='fname'>First Name</label>
                 </div>
-                <div class='grid-65'>
-                  <input type='text' id='fname' tabindex='1' />
+                <div className='grid-65'>
+                  <input type='text' id='fname' tabIndex='1' />
                 </div>
               </fieldset>
               <fieldset>
-                <div class='grid-35'>
-                  <label for='lname'>Last Name</label>
+                <div className='grid-35'>
+                  <label htmlFor='lname'>Last Name</label>
                 </div>
-                <div class='grid-65'>
-                  <input type='text' id='lname' tabindex='2' />
+                <div className='grid-65'>
+                  <input type='text' id='lname' tabIndex='2' />
                 </div>
               </fieldset>
 
               {/* <!-- Location --> */}
               <fieldset>
-                <div class='grid-35'>
-                  <label for='location'>Location</label>
+                <div className='grid-35'>
+                  <label htmlFor='location'>Location</label>
                 </div>
-                <div class='grid-65'>
-                  <input type='text' id='location' tabindex='4' />
+                <div className='grid-65'>
+                  <input type='text' id='location' tabIndex='4' />
                 </div>
               </fieldset>
               {/* <!-- Country --> */}
               <fieldset>
-                <div class='grid-35'>
-                  <label for='country'>Country</label>
+                <div className='grid-35'>
+                  <label htmlFor='country'>Country</label>
                 </div>
-                <div class='grid-65'>
-                  <input type='text' id='country' tabindex='5' />
+                <div className='grid-65'>
+                  <input type='text' id='country' tabIndex='5' />
                 </div>
               </fieldset>
               {/* <!-- Email --> */}
               <fieldset>
-                <div class='grid-35'>
-                  <label for='email'>Email Address</label>
+                <div className='grid-35'>
+                  <label htmlFor='email'>Email Address</label>
                 </div>
-                <div class='grid-65'>
-                  <input type='email' id='email' tabindex='6' />
+                <div className='grid-65'>
+                  <input type='email' id='email' tabIndex='6' />
                 </div>
               </fieldset>
 
               <fieldset>
-                <input type='button' class='Btn cancel' value='Cancel' />
+                <input type='button' className='Btn cancel' value='Cancel' />
                 <input
                   type='submit'
                   className='Btn image-upload-button'
