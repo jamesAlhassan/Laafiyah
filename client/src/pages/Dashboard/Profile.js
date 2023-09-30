@@ -1,63 +1,56 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
-// import "./style.css";
 import uploadImage from "../../assets/uploadImage.png";
+
 function ImageUpload() {
-  const [image, setImage] = useState(null);
-  const [files, setFiles] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  //   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const hiddenFileInput = useRef(null);
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-    setFiles(file);
-    const imgname = event.target.files[0].name;
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      const img = new Image();
-      img.src = reader.result;
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        const maxSize = Math.max(img.width, img.height);
-        canvas.width = maxSize;
-        canvas.height = maxSize;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(
-          img,
-          (maxSize - img.width) / 2,
-          (maxSize - img.height) / 2
+  const handleUploadButtonClick = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    try {
+      let imgUrl;
+      if (
+        profileImage &&
+        (profileImage.type === "image/png" ||
+          profileImage.type === "image/jpeg" ||
+          profileImage.type === "image/jpg")
+      ) {
+        const formData = new FormData();
+        formData.append("file", profileImage);
+        formData.append("cloud_name", "dryweqcbf");
+        formData.append("upload_preset", "ynthoewh");
+
+        const res = await fetch(
+          "https://api.cloudinary.com/v1_1/dryweqcbf/image/upload",
+          {
+            method: "post",
+            body: formData,
+          }
         );
-        canvas.toBlob(
-          (blob) => {
-            const file = new File([blob], imgname, {
-              type: "image/png",
-              lastModified: Date.now(),
-            });
 
-            console.log(file);
-            setImage(file);
-          },
-          "image/jpeg",
-          0.8
-        );
-      };
-    };
+        const data = await res.json();
+        imgUrl = data.url.toString();
+        setImagePreview(null);
+      }
+      alert(imgUrl);
+    } catch (err) {
+      console.log(err);
+      setIsLoading(false);
+    }
   };
-
-  const handleUploadButtonClick = () => {
-    const formData = new FormData();
-    formData.append("file", files);
-    formData.append("upload_preset", "ynthoewh");
-
-    axios
-      .post("https://api.cloudinary.com/v1_1/dryweqcbf/image/upload", formData)
-      .then((res) => console.log(res));
+  const handleChange = (e) => {
+    setProfileImage(e.target.files[0]);
+    setImagePreview(URL.createObjectURL(e.target.files[0]));
   };
-
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
-
   return (
     <div>
       <div className='wrapper'>
@@ -73,27 +66,29 @@ function ImageUpload() {
                       htmlFor='image-upload-input'
                       className='image-upload-label'
                     >
-                      {image ? image.name : "Choose an image"}
+                      {imagePreview ? (
+                        imagePreview.name
+                      ) : (
+                        <div>
+                          <img
+                            src={uploadImage}
+                            alt='upload image'
+                            className='img-display-before'
+                          />
+                          <p>Choose an image</p>
+                        </div>
+                      )}
                     </label>
                     <div onClick={handleClick} style={{ cursor: "pointer" }}>
-                      {image ? (
-                        <img
-                          src={URL.createObjectURL(image)}
-                          alt='upload image'
-                          className='img-display-after'
-                        />
-                      ) : (
-                        <img
-                          src={uploadImage}
-                          alt='upload image'
-                          className='img-display-before'
-                        />
+                      {imagePreview && (
+                        <img src={imagePreview && imagePreview} />
                       )}
 
                       <input
                         id='image-upload-input'
                         type='file'
-                        onChange={handleImageChange}
+                        accept='image/png, image/jpeg, image/jpg'
+                        onChange={handleChange}
                         ref={hiddenFileInput}
                         style={{ display: "none" }}
                       />
@@ -155,11 +150,15 @@ function ImageUpload() {
 
               <fieldset>
                 <input type='button' className='Btn cancel' value='Cancel' />
-                <input
-                  type='submit'
-                  className='Btn image-upload-button'
-                  value='Save Changes'
-                />
+                <p>
+                  {isLoading ? (
+                    "Uploading..."
+                  ) : (
+                    <button type='submit' className='Btn image-upload-button'>
+                      Save Changes
+                    </button>
+                  )}
+                </p>
               </fieldset>
             </form>
           </div>
