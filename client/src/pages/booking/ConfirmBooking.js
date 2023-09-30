@@ -4,9 +4,11 @@ import './ConfirmBooking.css';
 import { useEffect, useState } from "react";
 import newRequest from "../../utils/newRequest";
 import ConfirmationPopup from "../../components/popups/ConfirmationPopup";
+import ConfirmBookingModal from "../../components/modals/ConfirmBookingModal";
 
 const ConfirmBooking = () => {
 
+    const [showModal, setShowModal] = useState(false);
     const [phone, setPhone] = useState('');
     const [notes, setNotes] = useState('');
     const location = useLocation();
@@ -39,8 +41,19 @@ const ConfirmBooking = () => {
             console.log(error);
         }
 
-        setShowPopup(true);
+        // setShowPopup(true);
+        // Show the modal
+        setShowModal(true);
     }
+
+    const closeModal = () => {
+        // Close the modal
+        setShowModal(false);
+
+        // Redirect to the dashboard (you can use react-router-dom for this)
+        // Example: history.push('/dashboard');
+        navigate('/dasbhboard');
+    };
 
     const closePopup = () => {
         // close the popup and redirect to dashboard
@@ -101,6 +114,11 @@ const ConfirmBooking = () => {
                     </div>
                 </div>
             </div>
+            <ConfirmBookingModal
+                isOpen={showModal}
+                onRequestClose={closeModal}
+                onConfirm={() => { /* Handle onConfirm logic */ }}
+            />
         </>
     )
 }
