@@ -7,7 +7,14 @@ const register = async (req, res) => {
 
     const token = user.createJWT();
     res.cookie("accessToken", token);
-    res.status(StatusCodes.CREATED).json({ user: { email: user.email }, token });
+    res.status(StatusCodes.CREATED).json({
+        user: {
+            email: user.email,
+            role: user.role,
+            user: user._id,
+            token
+        }
+    });
 }
 
 const login = async (req, res) => {
@@ -23,19 +30,27 @@ const login = async (req, res) => {
 
     const token = user.createJWT();
 
-    // get user without the password
-    // const { password, ...info } = user._doc;
-
     res.cookie("accessToken", token).status(StatusCodes.OK).json({
         user: {
             email: user.email,
             role: user.role,
+            user: user._id,
             token
         }
     })
 }
 
+const logout = async (req, res) => {
+    res.clearCookie("accessToken", {
+        sameSite: "none",
+        secure: true,
+    })
+        .status(200)
+        .send('User logged out');
+};
+
 module.exports = {
     register,
-    login
+    login,
+    logout
 };

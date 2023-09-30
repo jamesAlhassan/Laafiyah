@@ -4,13 +4,6 @@ const jwt = require('jsonwebtoken');
 
 const authenticationMiddleware = (req, res, next) => {
 
-    // check header
-    // const authHeader = req.headers.authorization;
-    // if (!authHeader || !authHeader.startsWith('Bearer')) throw new UnauthenticatedError('Authentication invalid');
-
-    // get token from header and verify it
-    // const token = authHeader.split(' ')[1];
-
     // get token from browser and verify it
     const token = req.cookies.accessToken;
     if (!token) throw new UnauthenticatedError('Authentication invalid');

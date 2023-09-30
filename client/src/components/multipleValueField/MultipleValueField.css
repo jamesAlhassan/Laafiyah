@@ -13,14 +13,18 @@
 }
 
 .multiple-value-field ul {
-  width: 60%;
-  display: block;
+  width: 90%;
+  display: flex;
   background-color: aliceblue;
   margin: 4px;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .multiple-value-field ul li{
   padding: 10px;
+  display: flex;
+  flex-direction: row;
 }
 
 .input-section input {

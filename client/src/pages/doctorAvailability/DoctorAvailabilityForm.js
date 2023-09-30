@@ -12,7 +12,6 @@ function DoctorAvailabilityForm({ doctorId }) {
     // Fetch availability data from the database when the component mounts
     const fetchAvailability = async () => {
       try {
-        console.log(doctorId)
         const response = await newRequest.get(`/availability/${doctorId}`);
         const fetchedAvailability = response.data.availability || [];
 
