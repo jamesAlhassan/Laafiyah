@@ -83,7 +83,9 @@ function AppointmentList({ doctorId }) {
                     <td>{appointment.patient.firstName} {appointment.patient.lastName}</td>
                     <td>{appointment.day}</td>
                     <td>{appointment.time}</td>
-                    <td className={getStatusClass(appointment.status)}>{appointment.status}</td>
+                    <td><div className={getStatusClass(appointment.status)}>
+                      {appointment.status}
+                    </div></td>
                     <td>
                       <button onClick={() => handleAction(appointment)}>
                         Action
