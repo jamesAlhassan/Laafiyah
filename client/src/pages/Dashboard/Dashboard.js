@@ -18,7 +18,8 @@ const Dashboard = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const hiddenFileInput = useRef(null);
-
+  const [proImage, setProImage] = useState(profile_pic);
+  let imgUrl;
   const handleUploadButtonClick = async (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -29,7 +30,6 @@ const Dashboard = () => {
     console.log(lname);
 
     try {
-      let imgUrl;
       if (
         profileImage &&
         (profileImage.type === "image/png" ||
@@ -52,6 +52,7 @@ const Dashboard = () => {
         const data = await res.json();
         imgUrl = data.url.toString();
         setImagePreview(null);
+        setProImage(imgUrl);
       }
       alert(imgUrl);
       e.currentTarget.reset();
@@ -81,7 +82,7 @@ const Dashboard = () => {
         <div class='profile' onClick={handleProfile}>
           {/* <Link to='/'> */}
           <div class='image'>
-            <img src={profile_pic} />
+            <img src={proImage} />
           </div>
           {/* </Link> */}
         </div>
