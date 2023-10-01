@@ -4,7 +4,11 @@ import uploadImage from "../../assets/uploadImage.png";
 
 function ImageUpload() {
   const [profileImage, setProfileImage] = useState("");
-  //   const [image, setImage] = useState(null);
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [location, setLocation] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const hiddenFileInput = useRef(null);
@@ -12,6 +16,11 @@ function ImageUpload() {
   const handleUploadButtonClick = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const formData1 = new FormData(e.currentTarget);
+    setFname(formData1.get("fname"));
+    setLname(formData1.get("lname"));
+    console.log(fname);
+    console.log(lname);
 
     try {
       let imgUrl;
@@ -37,6 +46,7 @@ function ImageUpload() {
         const data = await res.json();
         imgUrl = data.url.toString();
         setImagePreview(null);
+        setIsLoading(false);
       }
       alert(imgUrl);
     } catch (err) {
@@ -108,7 +118,7 @@ function ImageUpload() {
                   <label htmlFor='fname'>First Name</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='fname' tabIndex='1' />
+                  <input type='text' id='fname' name='fname' tabIndex='1' />
                 </div>
               </fieldset>
               <fieldset>
@@ -116,7 +126,7 @@ function ImageUpload() {
                   <label htmlFor='lname'>Last Name</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='lname' tabIndex='2' />
+                  <input type='text' id='lname' name='lname' tabIndex='2' />
                 </div>
               </fieldset>
 
@@ -126,7 +136,12 @@ function ImageUpload() {
                   <label htmlFor='location'>Location</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='location' tabIndex='4' />
+                  <input
+                    type='text'
+                    id='location'
+                    name='location'
+                    tabIndex='4'
+                  />
                 </div>
               </fieldset>
               {/* <!-- Country --> */}
@@ -135,7 +150,7 @@ function ImageUpload() {
                   <label htmlFor='country'>Country</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='country' tabIndex='5' />
+                  <input type='text' id='country' name='country' tabIndex='5' />
                 </div>
               </fieldset>
               {/* <!-- Email --> */}
@@ -144,7 +159,7 @@ function ImageUpload() {
                   <label htmlFor='email'>Email Address</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='email' id='email' tabIndex='6' />
+                  <input type='email' id='email' name='email' tabIndex='6' />
                 </div>
               </fieldset>
 
