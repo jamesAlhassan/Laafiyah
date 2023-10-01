@@ -1,10 +1,14 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
+
 import uploadImage from "../../assets/uploadImage.png";
 
 function ImageUpload() {
   const [profileImage, setProfileImage] = useState("");
-  //   const [image, setImage] = useState(null);
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
+  const [country, setCountry] = useState("");
+  const [location, setLocation] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const hiddenFileInput = useRef(null);
@@ -12,6 +16,11 @@ function ImageUpload() {
   const handleUploadButtonClick = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    const formData1 = new FormData(e.currentTarget);
+    setFname(formData1.get("fname"));
+    setLname(formData1.get("lname"));
+    console.log(fname);
+    console.log(lname);
 
     try {
       let imgUrl;
@@ -24,7 +33,7 @@ function ImageUpload() {
         const formData = new FormData();
         formData.append("file", profileImage);
         formData.append("cloud_name", "dryweqcbf");
-        formData.append("upload_preset", "ynthoewh");
+        formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
 
         const res = await fetch(
           "https://api.cloudinary.com/v1_1/dryweqcbf/image/upload",
@@ -39,6 +48,8 @@ function ImageUpload() {
         setImagePreview(null);
       }
       alert(imgUrl);
+      e.currentTarget.reset();
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
@@ -108,7 +119,7 @@ function ImageUpload() {
                   <label htmlFor='fname'>First Name</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='fname' tabIndex='1' />
+                  <input type='text' id='fname' name='fname' tabIndex='1' />
                 </div>
               </fieldset>
               <fieldset>
@@ -116,7 +127,7 @@ function ImageUpload() {
                   <label htmlFor='lname'>Last Name</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='lname' tabIndex='2' />
+                  <input type='text' id='lname' name='lname' tabIndex='2' />
                 </div>
               </fieldset>
 
@@ -126,7 +137,12 @@ function ImageUpload() {
                   <label htmlFor='location'>Location</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='location' tabIndex='4' />
+                  <input
+                    type='text'
+                    id='location'
+                    name='location'
+                    tabIndex='4'
+                  />
                 </div>
               </fieldset>
               {/* <!-- Country --> */}
@@ -135,7 +151,7 @@ function ImageUpload() {
                   <label htmlFor='country'>Country</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='text' id='country' tabIndex='5' />
+                  <input type='text' id='country' name='country' tabIndex='5' />
                 </div>
               </fieldset>
               {/* <!-- Email --> */}
@@ -144,7 +160,7 @@ function ImageUpload() {
                   <label htmlFor='email'>Email Address</label>
                 </div>
                 <div className='grid-65'>
-                  <input type='email' id='email' tabIndex='6' />
+                  <input type='email' id='email' name='email' tabIndex='6' />
                 </div>
               </fieldset>
 
