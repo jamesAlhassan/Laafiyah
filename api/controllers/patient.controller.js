@@ -39,6 +39,22 @@ const getPatient = async (req, res, next) => {
     res.status(StatusCodes.OK).json({ patient });
 }
 
+const getPatientByUserId = async (req, res, next) => {
+    try {
+        // Get user ID from the authenticated user
+        const { id } = req.user;
+        const patient = await Patient.findOne({ user: id });
+
+        if (!patient) {
+            throw new NotFoundError('Patient not found for this user');
+        }
+        res.status(StatusCodes.OK).json(patient);
+    } catch (error) {
+        // Pass the error to the error handler middleware
+        next(error);
+    }
+}
+
 const getAllPatients = async (req, res) => {
     // NB: only admin should be able to get all patients
     const { role } = req.user;
@@ -87,6 +103,7 @@ const deletePatient = async (req, res) => {
 module.exports = {
     addPatient,
     getPatient,
+    getPatientByUserId,
     getAllPatients,
     updatePatient,
     deletePatient
