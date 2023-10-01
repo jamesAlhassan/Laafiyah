@@ -46,9 +46,10 @@ function ImageUpload() {
         const data = await res.json();
         imgUrl = data.url.toString();
         setImagePreview(null);
-        setIsLoading(false);
       }
       alert(imgUrl);
+      e.currentTarget.reset();
+      setIsLoading(false);
     } catch (err) {
       console.log(err);
       setIsLoading(false);
