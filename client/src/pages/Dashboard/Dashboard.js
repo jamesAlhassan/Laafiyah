@@ -5,6 +5,7 @@ import { FaFolder } from "react-icons/fa";
 import { BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import profile_pic from "../../assets/profile_pic.jpeg";
 import newRequest from "../../utils/newRequest";
+import PatientAppointments from "./PatientAppointments";
 
 const Dashboard = () => {
 
@@ -34,7 +35,7 @@ const Dashboard = () => {
   }
 
   const contentMap = {
-    Appointments: (<div>Appointment ios here</div>)
+    Appointments: <PatientAppointments patientId={patient._id} />
   }
 
   return (
