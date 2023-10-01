@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import axios from "axios";
+
 import uploadImage from "../../assets/uploadImage.png";
 
 function ImageUpload() {
@@ -24,7 +24,7 @@ function ImageUpload() {
         const formData = new FormData();
         formData.append("file", profileImage);
         formData.append("cloud_name", "dryweqcbf");
-        formData.append("upload_preset", "ynthoewh");
+        formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
 
         const res = await fetch(
           "https://api.cloudinary.com/v1_1/dryweqcbf/image/upload",
