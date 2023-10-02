@@ -7,8 +7,8 @@ const Signup = () => {
     setDocSignup((current) => !current);
   };
   return (
-    <div className='form'>
-      <button className='btn' onClick={handleDocSignup}>
+    <div className='signup-form'>
+      <button className='btn-signup' onClick={handleDocSignup}>
         {docSignup ? "signup as a patient" : "signup as a doctor"}
       </button>
       {docSignup ? (
