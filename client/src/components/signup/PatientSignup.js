@@ -39,11 +39,13 @@ function PatientRegistrationForm() {
     };
 
     try {
+      let userResponse;
       // Add user to the User collection
       await newRequest.post('/auth/register', { ...userData })
         .then((res) => {
           console.log('User added successfully');
           localStorage.setItem("currentUser", JSON.stringify(res.data));
+          userResponse = res;
 
           // Add the patient to the patient collection only if the user registration is successful
           return newRequest.post('/patient', { ...patientData });
@@ -52,10 +54,18 @@ function PatientRegistrationForm() {
           console.log('Patient added successfully');
           navigate("/");
         })
-        .catch((error) => {
+        .catch(async (error) => {
           // Handle errors and update the state with the error message
           const errorMessage = error.response?.data?.msg || 'An error occurred';
           setError(errorMessage);
+
+          // if there was an error adding the doctor, delete the doctor
+          if (userResponse) {
+            const userId = userResponse.data.user.user;
+            await newRequest.delete(`/auth/delete/${userId}`)
+              .then(() => console.log('User deleted successfully'))
+              .catch((deleteError) => console.log('Error deleting user: ', deleteError));
+          }
         });
 
     } catch (error) {
