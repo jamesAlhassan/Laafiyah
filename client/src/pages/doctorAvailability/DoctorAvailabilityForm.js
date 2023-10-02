@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import Calendar from 'react-calendar';
 import './DoctorAvailabilityForm.css';
+import './Calendar.css';
 import newRequest from '../../utils/newRequest';
 
 function DoctorAvailabilityForm({ doctorId }) {
-  const [availability, setAvailability] = useState([]); // Store availability data
-  const [selectedDay, setSelectedDay] = useState('Monday');
+  const [availability, setAvailability] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState('');
   const [isEmpty, setIsEmpty] = useState(false);
 
   useEffect(() => {
-    // Fetch availability data from the database when the component mounts
     const fetchAvailability = async () => {
       try {
         const response = await newRequest.get(`/availability/${doctorId}`);
         const fetchedAvailability = response.data.availability || [];
 
-        if(fetchedAvailability.length == 0) setIsEmpty(true);
-
-        // Sort and set the fetched availability
+        setIsEmpty(fetchedAvailability.length === 0);
         setAvailability(sortAvailability(fetchedAvailability));
       } catch (error) {
         console.error('Error fetching availability:', error);
@@ -25,83 +24,60 @@ function DoctorAvailabilityForm({ doctorId }) {
     };
 
     fetchAvailability();
-  }, []);
+  }, [doctorId]);
 
-  function sortAvailability(data) {
-    const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
-    // Sort the data by day based on the custom order
-    data.sort((a, b) => {
-      return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
-    });
-
-    return data;
-  }
-
-  const handleAddTimeSlot = () => {
-    if (timeSlot.trim() !== '') {
-      const existingDayIndex = availability.findIndex((item) => item.day === selectedDay);
-
-      if (existingDayIndex !== -1) {
-        const updatedAvailability = [...availability];
-
-        if (updatedAvailability[existingDayIndex].timeslots.indexOf(timeSlot) === -1) {
-          updatedAvailability[existingDayIndex].timeslots.push(timeSlot);
-
-          const daysOfWeekOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-          const sortedSchedule = [];
-
-          updatedAvailability.forEach(item => {
-            const day = item.day;
-            const slots = item.timeslots;
-            slots.sort();
-            sortedSchedule.push({
-              "day": day,
-              "timeslots": slots
-            });
-          });
-
-          sortedSchedule.sort((a, b) => {
-            return daysOfWeekOrder.indexOf(a.day) - daysOfWeekOrder.indexOf(b.day);
-          });
-          setAvailability(sortedSchedule);
-        }
-      } else {
-        setAvailability([...availability, { day: selectedDay, timeslots: [timeSlot] }]);
-      }
-
-      setTimeSlot('');
-    }
+  const sortAvailability = (data) => {
+    return [...data].sort((a, b) => new Date(a.day) - new Date(b.day));
   };
 
-  // Function to handle removing time slots
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
+  const handleAddTimeSlot = () => {
+    if (timeSlot.trim() === '') return;
+
+    const existingDayIndex = availability.findIndex((item) => item.day === selectedDate.toLocaleDateString());
+
+    if (existingDayIndex !== -1) {
+      const updatedAvailability = [...availability];
+
+      if (!updatedAvailability[existingDayIndex].timeslots.includes(timeSlot)) {
+        updatedAvailability[existingDayIndex].timeslots.push(timeSlot);
+        updatedAvailability.sort((a, b) => new Date(a.day) - new Date(b.day));
+        setAvailability(updatedAvailability);
+      }
+    } else {
+      setAvailability([...availability, { day: selectedDate.toLocaleDateString(), timeslots: [timeSlot] }]);
+    }
+
+    setTimeSlot('');
+  };
+
   const handleRemoveTimeSlot = (day, slot) => {
-    // Find the day to update in the availability array
     const dayIndex = availability.findIndex((item) => item.day === day);
     if (dayIndex !== -1) {
       const updatedAvailability = [...availability];
-
       const updatedSlots = availability[dayIndex].timeslots.filter((item) => item !== slot);
-      updatedAvailability[dayIndex].timeslots = updatedSlots;
 
-      // if slots are empty, remove day
-      if (updatedAvailability[dayIndex].timeslots.length === 0) handleDeleteDay(day);
-      else setAvailability(updatedAvailability);
+      if (updatedSlots.length === 0) {
+        handleDeleteDay(day);
+      } else {
+        updatedAvailability[dayIndex].timeslots = updatedSlots;
+        setAvailability(updatedAvailability);
+      }
     }
   };
 
   const handleFinish = async () => {
-    const newAvailability = {
-      availability
-    };
+    const newAvailability = { availability };
 
     try {
       if (isEmpty) {
-        // No data exists, use POST to create new availability
         await newRequest.post(`/availability/${doctorId}`, newAvailability);
         console.log('Availability created');
       } else {
-        // Data already exists, use PATCH to update it
         await newRequest.patch(`/availability/${doctorId}`, newAvailability);
         console.log('Availability updated');
       }
@@ -109,7 +85,6 @@ function DoctorAvailabilityForm({ doctorId }) {
       console.error('Error:', error);
     }
 
-    // If all time slots are deleted, remove data from the database
     if (availability.every((day) => day.timeslots.length === 0)) {
       try {
         await newRequest.delete(`/availability/${doctorId}`);
@@ -119,7 +94,6 @@ function DoctorAvailabilityForm({ doctorId }) {
       }
     }
   };
-
 
   const handleDeleteDay = (dayToRemove) => {
     const updatedAvailability = availability.filter((item) => item.day !== dayToRemove);
@@ -132,19 +106,12 @@ function DoctorAvailabilityForm({ doctorId }) {
         <form onSubmit={(e) => e.preventDefault()}>
           <h4>Set Availability</h4>
           <div className="form-group">
-            <label>Day of the Week:</label>
-            <select
-              value={selectedDay}
-              onChange={(e) => setSelectedDay(e.target.value)}
-            >
-              <option value="Monday">Monday</option>
-              <option value="Tuesday">Tuesday</option>
-              <option value="Wednesday">Wednesday</option>
-              <option value="Thursday">Thursday</option>
-              <option value="Friday">Friday</option>
-              <option value="Saturday">Saturday</option>
-              <option value="Sunday">Sunday</option>
-            </select>
+            <label>Date:</label>
+            <Calendar
+              className="date-calendar"
+              onChange={setSelectedDate}
+              value={selectedDate}
+            />
           </div>
           <div className="form-group">
             <label>Time Slots:</label>
@@ -169,7 +136,7 @@ function DoctorAvailabilityForm({ doctorId }) {
             <table>
               <thead>
                 <tr>
-                  <th>Day</th>
+                  <th>Date</th>
                   <th>Time Slots</th>
                   <th>Action</th>
                 </tr>
@@ -177,18 +144,19 @@ function DoctorAvailabilityForm({ doctorId }) {
               <tbody>
                 {availability.map((item) => (
                   <tr key={item.day}>
-                    <td>{item.day}</td>
+                    <td>{formatDate(item.day)}</td>
                     <td>
                       <ul>
                         {item.timeslots.map((slot, index) => (
-                          <li key={index}>{slot}<button
-                            type="button"
-                            onClick={() => {
-                              handleRemoveTimeSlot(item.day, slot);
-                            }}
-                          >
-                            X
-                          </button></li>
+                          <li key={index}>
+                            {slot}
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveTimeSlot(item.day, slot)}
+                            >
+                              X
+                            </button>
+                          </li>
                         ))}
                       </ul>
                     </td>

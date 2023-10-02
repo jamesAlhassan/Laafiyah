@@ -13,10 +13,6 @@ const AvailabilitySchema = new Schema({
       day: {
         type: String,
         required: true,
-        enum: {
-          values: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
-          message: 'please add a day',
-        },
       },
       timeslots: [
         {

@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import AppointmentList from './AppointmentList';
 import './DoctorDashboard.css';
-import { AiFillPlusCircle } from "react-icons/ai";
-import { FaFolder } from "react-icons/fa";
-import { BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
+import AppointmentList from './AppointmentList';
 import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
-import { useParams } from "react-router-dom";
 import DoctorProfile from './DoctorProfile';
 import newRequest from '../../utils/newRequest';
 import DoctorEditProfileForm from './DoctorEditProfile';
+import { BsFillCaretRightFill, BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
+import { AiFillSchedule } from 'react-icons/ai';
 
-const DoctorDashboard = () => {
+const NewDashboard = () => {
 
     const [selectedOption, setSelectedOption] = useState('Dashboard');
     const [doctor, setDoctor] = useState({});
     const [showEditProfile, setShowEditProfile] = useState(false);
+    const [expanded, setExpanded] = useState(false);
+
+    const toggleSidebar = () => {
+        setExpanded(!expanded);
+    };
 
     useEffect(() => {
         getDoctor();
@@ -51,9 +54,9 @@ const DoctorDashboard = () => {
     const contentMap = {
         Availability: <DoctorAvailabilityForm doctorId={doctor._id} />,
         Profile: showEditProfile ? (
-          <DoctorEditProfileForm doctor={doctor} goBack={handleGoBack} />
+            <DoctorEditProfileForm doctor={doctor} goBack={handleGoBack} />
         ) : (
-          <DoctorProfile doctor={doctor} onEditProfile={handleEditProfileClick} />
+            <DoctorProfile doctor={doctor} onEditProfile={handleEditProfileClick} />
         ),
         Appointment: <AppointmentList doctorId={doctor._id} />,
         // Dashboard: <DashboardContent />,
@@ -62,49 +65,51 @@ const DoctorDashboard = () => {
         // Messages: <MessagesContent />,
     };
 
-return (
-    <div className='wrapper'>
-        <aside className='aside'>
-            <ul>
-                <li className='logo hide' title='Add appointment'>
-                    <AiFillPlusCircle />
-                </li>
-                <li className={selectedOption === 'Appointment' ? 'active' : ''}
-                    title='View all appointments'
-                    onClick={() => handleOptionClick('Appointment')}>
-                    <FaFolder />
-                </li>
+    return (
+        <div className='dashboard'>
+            <div className={`side-bar-container ${expanded ? 'expanded' : ''}`}>
+                <div className={`sidebar ${expanded ? 'expanded' : ''}`}>
+                    <div className="open-menu" onClick={toggleSidebar}>
+                        <BsFillCaretRightFill className='open-menu-icon"' />
+                    </div>
 
-                <li className={selectedOption === 'Availability' ? 'active' : ''}
-                    title='View all availabilities'
-                    onClick={() => handleOptionClick('Availability')}>
-                    <FaFolder />
-                </li>
+                    <div
+                        className={`menu-item ${selectedOption === 'Appointment' ? 'active' : ''}`}
+                        title='View all appointments'
+                        onClick={() => handleOptionClick('Appointment')}
+                    >
+                        <AiFillSchedule className='menu-icon' />
+                        <span className="menu-label">Appointments</span>
+                    </div>
 
+                    <div
+                        className={`menu-item ${selectedOption === 'Availability' ? 'active' : ''}`}
+                        title='View all availabilities'
+                        onClick={() => handleOptionClick('Availability')}>
+                        <BsFillCalendar2DayFill className='menu-icon' />
+                        <span className="menu-label">Availabilities</span>
+                    </div>
 
-                <li className={selectedOption === 'Profile' ? 'active' : ''}
-                    title='Profile'
-                    onClick={() => handleOptionClick('Profile')}>
-                    <BsFillPeopleFill />
-                </li>
+                    <div 
+                    className={`menu-item ${selectedOption === 'Profile' ? 'active' : ''}`}
+                        title='Profile'
+                        onClick={() => handleOptionClick('Profile')}>
+                        <BsFillPeopleFill className='menu-icon' />
+                        <span className="menu-label">Profile</span>
+                    </div>
 
-                <li>
-                    <BsFillPeopleFill />
-                </li>
-                <li>
-                    <BsFillPeopleFill />
-                </li>
-                <li className='hide'>
-                    <BsFillCalendar2DayFill />
-                </li>
-            </ul>
-        </aside>
-        <main className='main'>
-            <h3>Welcome {doctor.firstName} {doctor.lastName}</h3>
-            {contentMap[selectedOption]}
-        </main>
-    </div>
-);
-}
+                    <div className="menu-item">
+                        <BsFillCalendar2DayFill className='menu-icon' />
+                        <span className="menu-label">Label 4</span>
+                    </div>
+                </div>
+            </div>
+            <main className='main'>
+                <h3>Welcome {doctor.title} {doctor.firstName} {doctor.lastName}</h3>
+                {contentMap[selectedOption]}
+            </main>
+        </div>
+    );
+};
 
-export default DoctorDashboard;
+export default NewDashboard;

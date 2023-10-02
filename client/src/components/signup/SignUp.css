@@ -1,11 +1,40 @@
-.signUpForm {
-    max-width: 800px;
+.signup-form {
+    width: 90%;
+    margin: auto;
+    background: var(--white);
+    border-radius: var(--borderRadius);
+    box-shadow: var(--shadow-2);
+    padding: 2rem 2.5rem;
+}
+
+.signup-form .error {
+    color: white;
+    font-size: large;
+    background-color: red;
+    padding: 4px 12px;
+}
+
+/* singup option button */
+.signup-form .btn-signup {
+    margin: 8px 0px;
+
+}
+ 
+.signup-form .signup-form-container form{
+    display: flex;
+    gap: 50px;
+    width: 100%;
     margin: 0 auto;
     padding: 20px;
     background-color: #f7f7f7;
     border: 1px solid #ddd;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.signup-form .signup-form-container .left-side,
+.signup-form .signup-form-container .right-side {
+    flex: 1;
 }
 
 /* Form label style */
@@ -16,7 +45,7 @@ label {
 }
 
 /* Form input style */
-.signUpForm input[type="text"],
+.signup-form-container input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="date"],
@@ -30,7 +59,7 @@ input[type="password"] {
 }
 
 /* Buttons style */
-.signUpForm button {
+.signup-form-container button {
     padding: 10px 20px;
     margin-top: 10px;
     background-color: #007bff;
@@ -42,25 +71,24 @@ input[type="password"] {
 }
 
 /* Add Specialization button style */
-.signUpForm button[type="button"] {
-    
+.signup-form-container button[type="button"] {
     margin-left: 10px;
 }
 
 /* Specializations list style */
-.signUpForm ul {
+.signup-form-container ul {
     display: block;
     list-style-type: none;
     padding: 0;
 }
 
-.signUpForm .specialities {
+.signup-form-container .specialities {
     padding: 0px;
     margin: 0px;
     min-height: auto;
 }
 
-.signUpForm li {
+.signup-form-container li {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,7 +96,7 @@ input[type="password"] {
 }
 
 /* Edit and Remove buttons style */
-.signUpForm li button {
+.signup-form-container li button {
     background-color: #ffc107;
     color: #FFFFFF;
     border: none;
@@ -78,7 +106,7 @@ input[type="password"] {
 }
 
 /* Hover effect for Edit and Remove buttons */
-.signUpForm li button:hover {
+.signup-form-container li button:hover {
     background-color: #ffca28;
 }
 
@@ -102,6 +130,6 @@ select#gender {
     cursor: pointer;
 }
 
-.signUpForm button[type='submit'] {
+.signup-form-container button[type='submit'] {
     width: 100%;
 }

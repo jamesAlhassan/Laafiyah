@@ -38,14 +38,21 @@ button:hover {
   background-color: #0056b3;
 }
 
+.pending, .approved, .declined {
+  padding: 0px;
+  text-align: center;
+  color: white;
+  border-radius: 5px;
+}
+
 .pending {
-  color: rgb(82, 80, 13);
+  background-color: rgb(255, 153, 0);
 }
 
 .approved {
-  color: green;
+  background-color: green;
 }
 
 .declined {
-  color: red;
+  background-color: red;
 }

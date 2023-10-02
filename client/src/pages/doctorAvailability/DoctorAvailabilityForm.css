@@ -1,6 +1,6 @@
 /* Availability form container */
 .availability-form {
-    max-width: 1000px;
+    max-width: 100%;
     margin: 0 auto;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -12,6 +12,8 @@
     display: flex;
     gap: 20px;
     padding: 0px;
+    flex-wrap: nowrap;
+    align-items: start;
 }
 
 .container form {
@@ -60,15 +62,8 @@ textarea {
     gap: 10px;
 }
 
-/* Time slot buttons style */
-button[type="button"] {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
+.time-slot-input input {
+    max-width: 120px;
 }
 
 /* Time slot buttons hover effect */

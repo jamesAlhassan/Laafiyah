@@ -966,6 +966,14 @@ footer .bottom-details .bottom_text {
   margin-right: 10px;
 }
 
+/* error  */
+.error {
+  color: white;
+  font-size: large;
+  background-color: red;
+  padding: 4px 12px;
+}
+
 /* ------------------------------------------media-footer------------------------------------------- */
 @media (max-width: 900px) {
   .company-info {

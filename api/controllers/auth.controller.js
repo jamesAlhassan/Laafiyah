@@ -1,8 +1,18 @@
 const User = require('../models/user.model');
-const { BadRequestError, UnauthenticatedError } = require('../errors');
+const { BadRequestError, UnauthenticatedError, NotFoundError } = require('../errors');
 const { StatusCodes } = require('http-status-codes');
 
 const register = async (req, res) => {
+    const { email } = req.body;
+    // Check if the user with the given email already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
+        // User with the same email already exists
+        throw new BadRequestError('Email already exists. Please use a different email.');
+    }
+
+    // If the user does not exist, proceed with registration
     const user = await User.create({ ...req.body });
 
     const token = user.createJWT();
@@ -15,6 +25,18 @@ const register = async (req, res) => {
             token
         }
     });
+}
+
+const deleteUser = async (req, res) => {
+    // make sure the userr has the right to delete
+    const { id } = req.params;
+
+    // check if user exist
+    const existingUser = await User.findOne({ _id: id });
+    if (!existingUser) throw new NotFoundError(`No user with id ${id} found`);
+
+    const user = await User.findByIdAndRemove({ _id: id });
+    res.status(StatusCodes.OK).send();
 }
 
 const login = async (req, res) => {
@@ -52,5 +74,6 @@ const logout = async (req, res) => {
 module.exports = {
     register,
     login,
+    deleteUser,
     logout
 };

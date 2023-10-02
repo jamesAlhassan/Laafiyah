@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './AppointmentList.css';
-import newRequest from '../../utils/newRequest';
-import AppointmentModal from '../../components/modals/AppointmentModal';
+import React, { useState, useEffect } from "react";
+import "../doctorDashboard/AppointmentList.css";
+import newRequest from "../../utils/newRequest";
+import PatientAppointmentModal from "../../components/modals/PatientAppointmentModal";
 
-function AppointmentList({ doctorId }) {
+const PatientAppointments = ({ patientId }) => {
   const [appointments, setAppointments] = useState([]);
   const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -12,57 +12,54 @@ function AppointmentList({ doctorId }) {
 
   const handleAction = (appointment) => {
     setSelectedAppointment(appointment);
-  }
+  };
 
   const handleCloseModal = () => {
     setSelectedAppointment(null);
-  }
+  };
 
-  const handleUpdate = async () => {
+  const handleViewDoctor = async () => {
     // update appointment status
-    const res = await newRequest.patch(`/appointment/${selectedAppointment._id}`, { status: selectedAppointment.status });
-  }
+    const res = await newRequest.patch(
+      `/appointment/${selectedAppointment._id}`,
+      { status: selectedAppointment.status }
+    );
+  };
 
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const res = await newRequest.get(`/appointment/doctor/${doctorId}`);
+        const res = await newRequest.get(`/appointment/patient/${patientId}`);
         const fetchedAppointments = res.data.appointments;
-        console.log('appointments: ', fetchedAppointments)
+        console.log("appointments: ", fetchedAppointments);
 
         if (fetchedAppointments.length === 0) setIsEmpty(true);
 
         setAppointments(fetchedAppointments);
       } catch (error) {
-        console.log('Error fetching appointments: ', error);
-        setError('Error fetching appointments');
+        console.log("Error fetching appointments: ", error);
+        setError("Error fetching appointments");
       } finally {
         setLoading(false);
       }
-    }
+    };
 
     fetchAppointments();
-  }, [doctorId])
+  }, [patientId]);
 
   // set bg colour for appointment status
   const getStatusClass = (status) => {
     switch (status) {
-      case 'pending':
-        return 'pending';
-      case 'approved':
-        return 'approved';
-      case 'declined':
-        return 'declined';
+      case "pending":
+        return "pending";
+      case "approved":
+        return "approved";
+      case "declined":
+        return "declined";
       default:
-        return '';
+        return "";
     }
   };
-
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
 
   return (
     <div className="appointment-list">
@@ -75,7 +72,7 @@ function AppointmentList({ doctorId }) {
             <table>
               <thead>
                 <tr>
-                  <th>Patient</th>
+                  <th>Doctor</th>
                   <th>Day</th>
                   <th>Time</th>
                   <th>Status</th>
@@ -84,17 +81,24 @@ function AppointmentList({ doctorId }) {
               </thead>
               <tbody>
                 {appointments.map((appointment) => (
-                  <tr key={appointment._id}>
-                    <td>{appointment.patient.firstName} {appointment.patient.lastName}</td>
-                    <td>{formatDate(appointment.day)}</td>
-                    <td>{appointment.time}</td>
-                    <td><div className={getStatusClass(appointment.status)}>
-                      {appointment.status}
-                    </div></td>
+                  <tr
+                    key={appointment._id}
+                    onClick={() => handleAction(appointment)}
+                  >
                     <td>
-                      <button onClick={() => handleAction(appointment)}>
-                        Action
-                      </button>
+                      {appointment.doctor.title}{" "}
+                      {appointment.doctor.firstName}{" "}
+                      {appointment.doctor.lastName}
+                    </td>
+                    <td>{appointment.day}</td>
+                    <td>{appointment.time}</td>
+                    <td>
+                      <div className={getStatusClass(appointment.status)}>
+                        {appointment.status}
+                      </div>
+                    </td>
+                    <td>
+                      <button>message</button>
                     </td>
                   </tr>
                 ))}
@@ -108,14 +112,14 @@ function AppointmentList({ doctorId }) {
 
       {/* Render the Appointment modal */}
       {selectedAppointment && (
-        <AppointmentModal
+        <PatientAppointmentModal
           appointment={selectedAppointment}
           onClose={handleCloseModal}
-          onUpdate={handleUpdate}
+          onViewDoctor={handleViewDoctor}
         />
       )}
     </div>
   );
-}
+};
 
-export default AppointmentList;
+export default PatientAppointments;
