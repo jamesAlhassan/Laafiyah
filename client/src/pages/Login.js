@@ -3,15 +3,11 @@ import { useNavigate, NavLink } from "react-router-dom";
 import newRequest from "../utils/newRequest";
 
 const Login = () => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [user, setUser] = useState({ email: "", password: "", });
+  const [error, setError] = useState(null); // New state for error
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    console.log(e.target.name);
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
@@ -27,8 +23,10 @@ const Login = () => {
           // go to the corresponding dashboard
           navigate('/');
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          // Handle errors and update the state with the error message
+          const errorMessage = error.response?.data?.msg || 'An error occurred';
+          setError(errorMessage);
         })
 
     } catch (err) {
@@ -41,6 +39,8 @@ const Login = () => {
     <div className='form'>
       <form onSubmit={handleSubmit}>
         <h4>Laafiyah Login</h4>
+        {/* Render error message if exists */}
+        {error && <div className='error'>{error}</div>}
         {/* email */}
         <div className='form-row'>
           <label htmlFor='email' className='form-label'>
