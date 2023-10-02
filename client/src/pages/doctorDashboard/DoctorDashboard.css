@@ -1,3 +1,74 @@
-.dashboard-section {
-  height: 300px;
+.dashboard {
+    display: flex;
+}
+
+.main {
+    flex-grow: 1;
+    padding: 16px;
+    transition: margin-left 0.5s;
+}
+
+.side-bar-container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    height: 100vh;
+    width: 60px;
+    background-color: #111;
+    overflow-x: hidden;
+    color: white;
+    transition: 0.5s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.menu-item {
+    padding: 8px;
+    width: 100%;
+    height: 60px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.menu-item:hover {
+    background-color: rgb(121, 118, 112);
+}
+
+.sidebar .active {
+    background-color: rgb(121, 118, 112);
+}
+
+
+.menu-label {
+    display: none;
+    margin-left: 8px;
+}
+
+.open-menu {
+    background-color: rgb(131, 108, 108);
+    width: 100%;
+    color: black;
+    padding: 4px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menu-icon {
+    height: 60%;
+    width: 60px;
+}
+
+/* Styles for expanded sidebar */
+.sidebar.expanded {
+    width: 200px;
+}
+
+.sidebar.expanded .menu-label {
+    display: block;
 }

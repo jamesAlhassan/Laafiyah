@@ -58,6 +58,11 @@ function AppointmentList({ doctorId }) {
     }
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
 
   return (
     <div className="appointment-list">
@@ -81,7 +86,7 @@ function AppointmentList({ doctorId }) {
                 {appointments.map((appointment) => (
                   <tr key={appointment._id}>
                     <td>{appointment.patient.firstName} {appointment.patient.lastName}</td>
-                    <td>{appointment.day}</td>
+                    <td>{formatDate(appointment.day)}</td>
                     <td>{appointment.time}</td>
                     <td><div className={getStatusClass(appointment.status)}>
                       {appointment.status}

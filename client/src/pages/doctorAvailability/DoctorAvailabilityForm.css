@@ -12,6 +12,8 @@
     display: flex;
     gap: 20px;
     padding: 0px;
+    flex-wrap: nowrap;
+    align-items: start;
 }
 
 .container form {
