@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../doctorDashboard/AppointmentList.css";
+import formatDate from "../../utils/formatDate";
 import newRequest from "../../utils/newRequest";
 import PatientAppointmentModal from "../../components/modals/PatientAppointmentModal";
 
@@ -90,7 +91,7 @@ const PatientAppointments = ({ patientId }) => {
                       {appointment.doctor.firstName}{" "}
                       {appointment.doctor.lastName}
                     </td>
-                    <td>{appointment.day}</td>
+                    <td>{formatDate(appointment.day)}</td>
                     <td>{appointment.time}</td>
                     <td>
                       <div className={getStatusClass(appointment.status)}>

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import DoctorSummary from "../../components/doctorSummary/DoctorSummary";
-import Review from "../../components/review/Review";
 import './Booking.css';
+import DoctorSummary from "../../components/doctorSummary/DoctorSummary";
+import formatDate from "../../utils/formatDate";
 import newRequest from "../../utils/newRequest";
+import Review from "../../components/review/Review";
 
 const Booking = () => {
     const [availability, setAvailability] = useState([]);
@@ -62,7 +63,7 @@ const Booking = () => {
                             <tbody>
                                 {availability.map((item) => (
                                     <tr key={item.day}>
-                                        <td>{item.day}</td>
+                                        <td>{formatDate(item.day)}</td>
                                         <td>
                                             <ul>
                                                 {item.timeslots.map((slot, index) => (
