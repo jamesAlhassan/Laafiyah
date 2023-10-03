@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
+import { AiFillSchedule } from 'react-icons/ai';
+import { BsFillCaretRightFill, BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import './DoctorDashboard.css';
 import AppointmentList from './AppointmentList';
-import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
-import DoctorProfile from './DoctorProfile';
-import newRequest from '../../utils/newRequest';
 import DoctorEditProfileForm from './DoctorEditProfile';
-import { BsFillCaretRightFill, BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
-import { AiFillSchedule } from 'react-icons/ai';
+import DoctorProfile from './DoctorProfile';
+import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
+import newRequest from '../../utils/newRequest';
 
-const NewDashboard = () => {
+const DoctorDashboard = () => {
 
     const [selectedOption, setSelectedOption] = useState('Dashboard');
     const [doctor, setDoctor] = useState({});
     const [showEditProfile, setShowEditProfile] = useState(false);
     const [expanded, setExpanded] = useState(false);
-
-    const toggleSidebar = () => {
-        setExpanded(!expanded);
-    };
 
     useEffect(() => {
         getDoctor();
@@ -37,7 +33,14 @@ const NewDashboard = () => {
         }
     }
 
+    // expand and collapse the sidebar. Expand shows both icons and labels
+    // collapse shows only labels
+    const toggleSidebar = () => {
+        setExpanded(!expanded);
+    };
+
     const handleOptionClick = (option) => {
+        // set the selected option to the sidebar menu item clicked
         setSelectedOption(option);
     }
 
@@ -46,11 +49,12 @@ const NewDashboard = () => {
         setShowEditProfile(true);
     };
 
-    // got back to DoctorProfile
+    // got back to DoctorProfile from the EditProfile
     const handleGoBack = () => {
         setShowEditProfile(false);
     }
 
+    // to handle sidebar menu Items
     const contentMap = {
         Availability: <DoctorAvailabilityForm doctorId={doctor._id} />,
         Profile: showEditProfile ? (
@@ -59,10 +63,6 @@ const NewDashboard = () => {
             <DoctorProfile doctor={doctor} onEditProfile={handleEditProfileClick} />
         ),
         Appointment: <AppointmentList doctorId={doctor._id} />,
-        // Dashboard: <DashboardContent />,
-        // Profile: <ProfileContent />,
-        // Settings: <SettingsContent />,
-        // Messages: <MessagesContent />,
     };
 
     return (
@@ -90,8 +90,8 @@ const NewDashboard = () => {
                         <span className="menu-label">Availabilities</span>
                     </div>
 
-                    <div 
-                    className={`menu-item ${selectedOption === 'Profile' ? 'active' : ''}`}
+                    <div
+                        className={`menu-item ${selectedOption === 'Profile' ? 'active' : ''}`}
                         title='Profile'
                         onClick={() => handleOptionClick('Profile')}>
                         <BsFillPeopleFill className='menu-icon' />
@@ -112,4 +112,4 @@ const NewDashboard = () => {
     );
 };
 
-export default NewDashboard;
+export default DoctorDashboard;

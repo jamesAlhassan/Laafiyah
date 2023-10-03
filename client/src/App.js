@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DoctorDashboard from "./pages/doctorDashboard/DoctorDashboard";
 import Booking from "./pages/booking/Booking";
 import ConfirmBooking from "./pages/booking/ConfirmBooking";
+import PatientDashboard from "./pages/patientDashboard/PatientDashboard";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/doctordashboard" element={<DoctorDashboard />} />
             <Route path="/booking/:doctorId" element={<Booking />} />
             <Route path="/confirmbooking" element={<ConfirmBooking />} />
+            <Route path="/patientdashboard" element={<PatientDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>

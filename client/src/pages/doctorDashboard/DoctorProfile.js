@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { } from 'react';
 import './DoctorProfile.css';
-import newRequest from '../../utils/newRequest';
-import { useNavigate } from 'react-router-dom';
 
 function DoctorProfile({ doctor, onEditProfile }) {
-    const [dateOfBirth, setDateOfBirth] = useState(null);
 
     return (
         <div className="doctor-profile-form">
@@ -28,7 +25,7 @@ function DoctorProfile({ doctor, onEditProfile }) {
 
                     <div className="form-group">
                         <label>Date of Birth:</label>
-                        <span>{dateOfBirth ? dateOfBirth.toISOString().substr(0, 10) : ''}</span>
+                        <span>{doctor.dateOfBirth ? doctor.dateOfBirth.substr(0, 10) : ''}</span>
                     </div>
 
                     <div className="form-group">

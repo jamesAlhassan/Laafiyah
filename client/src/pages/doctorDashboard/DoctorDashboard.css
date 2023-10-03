@@ -2,19 +2,19 @@
     display: flex;
 }
 
-.main {
+.dashboard .main {
     flex-grow: 1;
     padding: 16px;
     transition: margin-left 0.5s;
+    min-height: 500px;
 }
 
 .side-bar-container {
     display: flex;
-    height: 100vh;
 }
 
 .sidebar {
-    height: 100vh;
+    height: 100%;
     width: 60px;
     background-color: #111;
     overflow-x: hidden;
