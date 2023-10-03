@@ -44,7 +44,7 @@ export default function Header() {
         {user ? (
           <>
             <NavLink
-              to={user?.user.role === 'doctor' ? '/doctordashboard' : '/dashboard'}
+              to={user?.user.role === 'doctor' ? '/doctordashboard' : '/patientdashboard'}
               style={({ isActive }) => (isActive ? activeStyles : null)}
             >
               dashboard
