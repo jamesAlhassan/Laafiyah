@@ -11,6 +11,8 @@
 .doctor-profile-form .info {
     display: flex;
     gap: 20px;
+    line-height: 1;
+    font-weight: 200;
 }
 
 .doctor-profile-form .info .left-side,
@@ -34,9 +36,9 @@
     margin-bottom: 20px;
 }
 
-.profile-picture img {
-    max-width: 200px;
-    max-height: 200px;
+.profile-pic img {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     margin-bottom: 10px;
 }
