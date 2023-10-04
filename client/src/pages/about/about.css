@@ -30,7 +30,7 @@
 }
 
 .company-info span .our {
-  color: #ffdc0e;
+  color: var(--primary-500);
 }
 
 .company-info p {

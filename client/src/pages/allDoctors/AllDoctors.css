@@ -1,8 +1,11 @@
 .allDoctors {
-    background-color: #C0C0C0;
-    padding: 20px 200px;
+  background-color: #c0c0c0;
+  padding: 20px 200px;
 }
 
 .allDoctors .doctorCard {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
+}
+footer {
+  bottom: 0;
 }

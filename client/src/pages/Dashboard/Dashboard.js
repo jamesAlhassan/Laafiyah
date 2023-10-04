@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import "./dashboard.css";
 import { Link } from "react-router-dom";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { FaFolder } from "react-icons/fa";
@@ -81,7 +82,7 @@ const Dashboard = () => {
         <div class='profile' onClick={handleProfile}>
           {/* <Link to='/'> */}
           <div class='image'>
-            <img src={proImage} />
+            <img src={proImage} className='pro-img' />
           </div>
           {/* </Link> */}
         </div>
@@ -122,150 +123,138 @@ const Dashboard = () => {
       <main className='main'>
         {isProfile ? (
           <div>
-            <div className='wrapper'>
-              <div className='pro'>
-                <div className='content'>
-                  <h1>Edit Profile</h1>
-                  <form onSubmit={handleUploadButtonClick}>
-                    {/* <!-- Photo --> */}
-                    <fieldset>
-                      <div className='image-upload-container'>
-                        <div className='box-decoration'>
-                          <label
-                            htmlFor='image-upload-input'
-                            className='image-upload-label'
-                          >
-                            {imagePreview ? (
-                              imagePreview.name
-                            ) : (
-                              <div>
-                                <img
-                                  src={uploadImage}
-                                  alt='upload image'
-                                  className='img-display-before'
-                                />
-                                <p>Choose an image</p>
-                              </div>
-                            )}
-                          </label>
-                          <div
-                            onClick={handleClick}
-                            style={{ cursor: "pointer" }}
-                          >
-                            {imagePreview && (
-                              <img src={imagePreview && imagePreview} />
-                            )}
+            <div className='pro'>
+              <div className='content'>
+                <h1>Edit Profile</h1>
+                <form onSubmit={handleUploadButtonClick}>
+                  {/* <!-- Photo --> */}
+                  <fieldset>
+                    <div className='image-upload-container'>
+                      <div className='box-decoration'>
+                        <label
+                          htmlFor='image-upload-input'
+                          className='image-upload-label'
+                        >
+                          {imagePreview ? (
+                            imagePreview.name
+                          ) : (
+                            <div>
+                              <img
+                                src={uploadImage}
+                                alt='upload image'
+                                className='img-display-before'
+                              />
+                              <p>Choose an image</p>
+                            </div>
+                          )}
+                        </label>
+                        <div
+                          onClick={handleClick}
+                          style={{ cursor: "pointer" }}
+                        >
+                          {imagePreview && (
+                            <img src={imagePreview && imagePreview} />
+                          )}
 
-                            <input
-                              id='image-upload-input'
-                              type='file'
-                              accept='image/png, image/jpeg, image/jpg'
-                              onChange={handleChange}
-                              ref={hiddenFileInput}
-                              style={{ display: "none" }}
-                            />
-                          </div>
+                          <input
+                            id='image-upload-input'
+                            type='file'
+                            accept='image/png, image/jpeg, image/jpg'
+                            onChange={handleChange}
+                            ref={hiddenFileInput}
+                            style={{ display: "none" }}
+                          />
+                        </div>
 
-                          {/* <button
+                        {/* <button
                       className='image-upload-button'
                       onClick={handleUploadButtonClick}
                     >
                       Upload
                     </button> */}
-                        </div>
                       </div>
-                    </fieldset>
-                    <fieldset>
-                      <div className='grid-35'>
-                        <label htmlFor='fname'>First Name</label>
-                      </div>
-                      <div className='grid-65'>
-                        <input
-                          type='text'
-                          id='fname'
-                          name='fname'
-                          tabIndex='1'
-                        />
-                      </div>
-                    </fieldset>
-                    <fieldset>
-                      <div className='grid-35'>
-                        <label htmlFor='lname'>Last Name</label>
-                      </div>
-                      <div className='grid-65'>
-                        <input
-                          type='text'
-                          id='lname'
-                          name='lname'
-                          tabIndex='2'
-                        />
-                      </div>
-                    </fieldset>
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <div className='grid-35'>
+                      <label htmlFor='fname'>First Name</label>
+                    </div>
+                    <div className='grid-65'>
+                      <input type='text' id='fname' name='fname' tabIndex='1' />
+                    </div>
+                  </fieldset>
+                  <fieldset>
+                    <div className='grid-35'>
+                      <label htmlFor='lname'>Last Name</label>
+                    </div>
+                    <div className='grid-65'>
+                      <input type='text' id='lname' name='lname' tabIndex='2' />
+                    </div>
+                  </fieldset>
 
-                    {/* <!-- Location --> */}
-                    <fieldset>
-                      <div className='grid-35'>
-                        <label htmlFor='location'>Location</label>
-                      </div>
-                      <div className='grid-65'>
-                        <input
-                          type='text'
-                          id='location'
-                          name='location'
-                          tabIndex='4'
-                        />
-                      </div>
-                    </fieldset>
-                    {/* <!-- Country --> */}
-                    <fieldset>
-                      <div className='grid-35'>
-                        <label htmlFor='country'>Country</label>
-                      </div>
-                      <div className='grid-65'>
-                        <input
-                          type='text'
-                          id='country'
-                          name='country'
-                          tabIndex='5'
-                        />
-                      </div>
-                    </fieldset>
-                    {/* <!-- Email --> */}
-                    <fieldset>
-                      <div className='grid-35'>
-                        <label htmlFor='email'>Email Address</label>
-                      </div>
-                      <div className='grid-65'>
-                        <input
-                          type='email'
-                          id='email'
-                          name='email'
-                          tabIndex='6'
-                        />
-                      </div>
-                    </fieldset>
-
-                    <fieldset>
+                  {/* <!-- Location --> */}
+                  <fieldset>
+                    <div className='grid-35'>
+                      <label htmlFor='location'>Location</label>
+                    </div>
+                    <div className='grid-65'>
                       <input
-                        type='button'
-                        className='Btn cancel'
-                        value='Cancel'
+                        type='text'
+                        id='location'
+                        name='location'
+                        tabIndex='4'
                       />
-                      <p>
-                        {isLoading ? (
-                          "Uploading..."
-                        ) : (
-                          <button
-                            type='submit'
-                            className='Btn image-upload-button'
-                          >
-                            Save Changes
-                          </button>
-                        )}
-                      </p>
-                    </fieldset>
-                  </form>
-                </div>
+                    </div>
+                  </fieldset>
+                  {/* <!-- Country --> */}
+                  <fieldset>
+                    <div className='grid-35'>
+                      <label htmlFor='country'>Country</label>
+                    </div>
+                    <div className='grid-65'>
+                      <input
+                        type='text'
+                        id='country'
+                        name='country'
+                        tabIndex='5'
+                      />
+                    </div>
+                  </fieldset>
+                  {/* <!-- Email --> */}
+                  <fieldset>
+                    <div className='grid-35'>
+                      <label htmlFor='email'>Email Address</label>
+                    </div>
+                    <div className='grid-65'>
+                      <input
+                        type='email'
+                        id='email'
+                        name='email'
+                        tabIndex='6'
+                      />
+                    </div>
+                  </fieldset>
+
+                  <fieldset>
+                    <input
+                      type='button'
+                      className='Btn cancel'
+                      value='Cancel'
+                    />
+                    <p>
+                      {isLoading ? (
+                        "Uploading..."
+                      ) : (
+                        <button
+                          type='submit'
+                          className='Btn image-upload-button'
+                        >
+                          Save Changes
+                        </button>
+                      )}
+                    </p>
+                  </fieldset>
+                </form>
               </div>
             </div>
           </div>
