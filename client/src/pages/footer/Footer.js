@@ -1,3 +1,4 @@
+import "./footer.css";
 import { FaSquareFacebook } from "react-icons/fa6";
 import {
   AiFillInstagram,
