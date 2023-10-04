@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import About from "./pages/About";
+import About from "./pages/about/About";
 import Signup from "./pages/Signup";
 import AllDoctors from "./pages/allDoctors/AllDoctors";
 import Doctor from "./pages/doctor/Doctor";
@@ -32,10 +32,10 @@ const App = () => {
             <Route path='profile' element={<Profile />} />
             <Route path='alldoctors' element={<AllDoctors />} />
             <Route path='doctor/:id' element={<Doctor />} />
-            <Route path="/doctordashboard" element={<DoctorDashboard />} />
-            <Route path="/booking/:doctorId" element={<Booking />} />
-            <Route path="/confirmbooking" element={<ConfirmBooking />} />
-            <Route path="/patientdashboard" element={<PatientDashboard />} />
+            <Route path='/doctordashboard' element={<DoctorDashboard />} />
+            <Route path='/booking/:doctorId' element={<Booking />} />
+            <Route path='/confirmbooking' element={<ConfirmBooking />} />
+            <Route path='/patientdashboard' element={<PatientDashboard />} />
           </Route>
         </Routes>
       </BrowserRouter>
