@@ -374,16 +374,6 @@ main {
 .image {
   justify-self: end;
 }
-img {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 4rem;
-  @media screen and (max-width: 400px) {
-    width: 3rem;
-    height: 3rem;
-    border-radius: 3rem;
-  }
-}
 
 .notification {
   position: absolute;
@@ -622,49 +612,4 @@ input:focus {
   height: 200px;
   width: 200px;
   border-radius: 100%;
-}
-
-/* FOOTER */
-.footer {
-  background: #222;
-  text-align: center;
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  right: 0;
-  height: 12rem;
-}
-
-.social-icon {
-  color: var(--white);
-  font-size: 1.5rem;
-  margin-right: 1rem;
-  transition: var(--transition);
-}
-
-.social-icon:hover {
-  color: var(--primary-500);
-}
-.footer-text {
-  margin-top: 2rem;
-  text-transform: uppercase;
-  color: var(--white);
-  font-weight: 400;
-}
-.company {
-  color: var(--primary-500);
-  margin-right: 2rem;
-  margin-left: 2rem;
-}
-.section-center {
-  padding: 1rem 0;
-  width: 85vw;
-  margin: 0 auto;
-  max-width: 1170px;
-}
-@media screen and (min-width: 992px) {
-  .section-center {
-    width: 95vw;
-    padding: 1rem 1rem;
-  }
 }
