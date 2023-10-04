@@ -3,6 +3,7 @@ import { AiFillSchedule } from 'react-icons/ai';
 import { BsFillCaretRightFill, BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import './DoctorDashboard.css';
 import AppointmentList from './AppointmentList';
+import ChatComponent from '../chat/ChatComponent';
 import DoctorEditProfileForm from './DoctorEditProfile';
 import DoctorProfile from './DoctorProfile';
 import DoctorAvailabilityForm from '../doctorAvailability/DoctorAvailabilityForm';
@@ -63,6 +64,7 @@ const DoctorDashboard = () => {
             <DoctorProfile doctor={doctor} onEditProfile={handleEditProfileClick} />
         ),
         Appointment: <AppointmentList doctorId={doctor._id} />,
+        Chat: <ChatComponent userType="doctor" userId={doctor._id} />
     };
 
     return (
@@ -96,6 +98,15 @@ const DoctorDashboard = () => {
                         onClick={() => handleOptionClick('Profile')}>
                         <BsFillPeopleFill className='menu-icon' />
                         <span className="menu-label">Profile</span>
+                    </div>
+
+
+                    <div
+                        className={`menu-item ${selectedOption === 'Chat' ? 'active' : ''}`}
+                        title='Chat'
+                        onClick={() => handleOptionClick('Chat')}>
+                        <BsFillPeopleFill className='menu-icon' />
+                        <span className="menu-label">Chat</span>
                     </div>
 
                     <div className="menu-item">

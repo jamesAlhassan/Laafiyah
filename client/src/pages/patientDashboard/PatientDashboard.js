@@ -6,6 +6,7 @@ import './PatientDashboard.css';
 import PatientAppointments from "./PatientAppointments";
 import PatientEditProfile from "./PatientEditProfile";
 import PatientProfile from "./PatientProfile";
+import ChatComponent from "../chat/ChatComponent";
 import newRequest from '../../utils/newRequest';
 import profile_pic from "../../assets/profile_pic.jpeg";
 
@@ -63,6 +64,7 @@ const PatientDashboard = () => {
       <PatientEditProfile patient={patient} goBack={handleGoBack} />
     ) : (
       <PatientProfile patient={patient} onEditProfile={handleEditProfileClick} />),
+      Chat: <ChatComponent userType="patient" userId={patient._id} />
   };
 
   return (
@@ -88,6 +90,14 @@ const PatientDashboard = () => {
             onClick={() => handleOptionClick('Profile')}>
             <BsFillPeopleFill className='menu-icon' />
             <span className="menu-label">Profile</span>
+          </div>
+
+          <div
+            className={`menu-item ${selectedOption === 'Chat' ? 'active' : ''}`}
+            title='Chat'
+            onClick={() => handleOptionClick('Chat')}>
+            <BsFillPeopleFill className='menu-icon' />
+            <span className="menu-label">Chat</span>
           </div>
 
           <div className="menu-item">
