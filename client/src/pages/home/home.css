@@ -28,12 +28,14 @@
 
 .two-button {
   display: flex;
+
   gap: 10px;
   margin-bottom: 20px;
+  background-color: red;
 }
 
 .w-btn {
-  color: #1a2c79;
+  color: var(--primary-500);
 }
 .w-btn:hover {
   background: transparent;
