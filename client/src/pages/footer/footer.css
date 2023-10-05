@@ -7,6 +7,7 @@
   left: 0;
   right: 0;
   height: 13rem;
+  z-index: 1;
 }
 
 .social-icon {

@@ -4,11 +4,7 @@ const About = () => {
   return (
     <div className='about-company'>
       <div className='about-img'>
-        <img
-          src={profile_pic}
-          alt=''
-          style={{ width: "80%", objectFit: "cover" }}
-        />
+        <img src={profile_pic} alt='' style={{ width: "80%" }} />
       </div>
       <div className='company-info'>
         <span>
