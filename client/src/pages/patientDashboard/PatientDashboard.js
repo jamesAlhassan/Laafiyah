@@ -114,7 +114,7 @@ const PatientDashboard = () => {
           </Link>
           <div className='profile'>
             <div className='image'>
-              <img src={proImage} />
+              <img className="pro-img" src={proImage} />
             </div>
           </div>
         </header>
