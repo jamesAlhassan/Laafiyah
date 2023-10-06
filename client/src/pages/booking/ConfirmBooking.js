@@ -1,9 +1,10 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import DoctorSummary from "../../components/doctorSummary/DoctorSummary";
-import './ConfirmBooking.css';
 import { useState } from "react";
-import newRequest from "../../utils/newRequest";
+import { useLocation, useNavigate } from "react-router-dom";
+import './ConfirmBooking.css';
 import ConfirmBookingModal from "../../components/modals/ConfirmBookingModal";
+import DoctorSummary from "../../components/doctorSummary/DoctorSummary";
+import formatDate from "../../utils/formatDate";
+import newRequest from "../../utils/newRequest";
 
 const ConfirmBooking = () => {
 
@@ -57,7 +58,7 @@ const ConfirmBooking = () => {
                 <div className="booking-details">
                     <li><h4>In Clinic Appointment</h4></li>
                     <li>
-                        <p>On {appointment.day} <br />
+                        <p>On {formatDate(appointment.day)} <br />
                             Change Date & Time</p>
                         <p>at {appointment.time}</p>
                     </li>

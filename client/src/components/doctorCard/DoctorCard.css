@@ -31,4 +31,5 @@
 .doctorCard .outlineButton {
     border: 1px solid green;
     background-color: transparent;
+    color: green;
 }

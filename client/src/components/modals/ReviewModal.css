@@ -1,0 +1,49 @@
+/* Style for the modal backdrop */
+.reviewModal {
+    padding: 2px;
+}
+
+.modal-backdrop {
+    opacity: 0.5 !important;
+}
+
+/* Style for the modal content */
+.reviewModal .modal-content {
+    border-radius: 8px;
+    width: 100%;
+    min-width: 200px;
+    max-width: 100%;
+    margin: 0px;
+}
+
+/* Style for the modal header */
+.reviewModal .modal-header {
+    color: black;
+    border-bottom: none;
+}
+
+/* Style for the modal body */
+.modal-body {
+    padding: 20px;
+}
+
+/* Style for the form inputs */
+.form-label {
+    font-weight: bold;
+}
+
+.form-control,
+.form-select {
+    margin-bottom: 15px;
+}
+
+/* Style for the submit button */
+.reviewModal .btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+/* Hover effect for the submit button */
+.btn-primary:hover {
+    background-color: #0056b3;
+}

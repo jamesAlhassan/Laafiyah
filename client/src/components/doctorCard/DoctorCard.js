@@ -11,7 +11,9 @@ const DoctorCard = ({ doctor }) => {
                 <Link to={`/doctor/${doctor?._id}`}>
                     <button className="mainButton">View Profile</button>
                 </Link>
-                <button className="outlineButton">Book Appointment</button>
+                <Link to={`/booking/${doctor?._id}`}>
+                    <button className="outlineButton">Book Appointment</button>
+                </Link>
             </div>
         </div>
     );

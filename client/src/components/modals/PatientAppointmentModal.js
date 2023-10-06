@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './AppointmentModal.css';
+import formatDate from '../../utils/formatDate';
 
 const PatientAppointmentModal = ({ appointment, onClose, onViewDoctor }) => {
     const [feedback, setFeedback] = useState('');
@@ -27,7 +28,7 @@ const PatientAppointmentModal = ({ appointment, onClose, onViewDoctor }) => {
                     <p><b>Hospital: </b>{appointment.doctor.hospitalAffiliation}</p>
 
                     <h4>Appointment Details</h4>
-                    <p><b>Day: </b>{appointment.day}</p>
+                    <p><b>Day: </b>{formatDate(appointment.day)}</p>
                     <p><b>Time: </b> {appointment.time}</p>
                     <p><b>Status: </b> {appointment.status}</p>
                     <p><b>Notes: </b>{appointment.notes}</p>

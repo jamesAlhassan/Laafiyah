@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { BiSolidMessageAlt, BiSolidCommentAdd } from 'react-icons/bi';
+import { BsEyeFill } from 'react-icons/bs';
 import "../doctorDashboard/AppointmentList.css";
+import formatDate from "../../utils/formatDate";
 import newRequest from "../../utils/newRequest";
 import PatientAppointmentModal from "../../components/modals/PatientAppointmentModal";
+import ReviewModal from "../../components/modals/ReviewModal";
 
 const PatientAppointments = ({ patientId }) => {
   const [appointments, setAppointments] = useState([]);
@@ -9,13 +13,26 @@ const PatientAppointments = ({ patientId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedAppointment, setSelectedAppointment] = useState(null);
+  const [reviewContent, setReviewContent] = useState({});
+  const [openReview, setOpenReview] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [reviewMessage, setReviewMessage] = useState('');
 
   const handleAction = (appointment) => {
+    // close modal if it is already openend b4 opening this one
+    setOpenReview(false);
+    setOpenDetails(true);
     setSelectedAppointment(appointment);
   };
 
   const handleCloseModal = () => {
+    // closes any opened modal
     setSelectedAppointment(null);
+    setOpenDetails(false);
+    setOpenReview(false);
+    // Clear the review message after closing the modal
+    setReviewMessage('');
   };
 
   const handleViewDoctor = async () => {
@@ -25,6 +42,36 @@ const PatientAppointments = ({ patientId }) => {
       { status: selectedAppointment.status }
     );
   };
+
+  const openReviewModal = (appointment) => {
+    // close modal if it is already openend b4 opening this one
+    setOpenDetails(false);
+    setSelectedAppointment(appointment);
+    setOpenReview(true);
+  }
+
+  const addReview = async (reviewItem) => {
+
+    const review = {
+      ...reviewItem,
+      doctor: selectedAppointment.doctor._id,
+    }
+
+    try {
+      // add review
+      const res = await newRequest.post('/review', review)
+        .then((res) => setReviewMessage("Review has been added successfullly"))
+        .catch((error) => {
+          const errorMessage = error.response?.data?.msg || 'An error occurred';
+          setReviewMessage(errorMessage);
+        })
+
+    } catch (error) {
+      // Handle error
+      console.error('Error adding review:', error);
+      setReviewMessage('Error adding review. Please try again.');
+    }
+  }
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -83,14 +130,13 @@ const PatientAppointments = ({ patientId }) => {
                 {appointments.map((appointment) => (
                   <tr
                     key={appointment._id}
-                    onClick={() => handleAction(appointment)}
                   >
                     <td>
                       {appointment.doctor.title}{" "}
                       {appointment.doctor.firstName}{" "}
                       {appointment.doctor.lastName}
                     </td>
-                    <td>{appointment.day}</td>
+                    <td>{formatDate(appointment.day)}</td>
                     <td>{appointment.time}</td>
                     <td>
                       <div className={getStatusClass(appointment.status)}>
@@ -98,7 +144,9 @@ const PatientAppointments = ({ patientId }) => {
                       </div>
                     </td>
                     <td>
-                      <button>message</button>
+                      <BiSolidMessageAlt className="table-icons blue" title="Message Doctor" />
+                      <BiSolidCommentAdd className="table-icons brown" title="Add Review" onClick={() => openReviewModal(appointment)} />
+                      <BsEyeFill className="table-icons green" title="View" onClick={() => handleAction(appointment)} />
                     </td>
                   </tr>
                 ))}
@@ -111,12 +159,31 @@ const PatientAppointments = ({ patientId }) => {
       )}
 
       {/* Render the Appointment modal */}
-      {selectedAppointment && (
+      {openDetails && (
         <PatientAppointmentModal
           appointment={selectedAppointment}
           onClose={handleCloseModal}
           onViewDoctor={handleViewDoctor}
         />
+      )}
+
+      {/* Render the Review modal */}
+      {openReview && (
+        <ReviewModal
+          setReviewContent={setReviewContent}
+          onClose={handleCloseModal}
+          onViewDoctor={handleViewDoctor}
+          onAddReview={addReview}
+          appointment
+        />
+      )}
+
+      {/* Conditionally render the review message */}
+      {reviewMessage && (
+        <div>
+          <p>{reviewMessage}</p>
+          <button onClick={() => setReviewMessage('')}>Close</button>
+        </div>
       )}
     </div>
   );

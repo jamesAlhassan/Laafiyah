@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './AppointmentList.css';
+import formatDate from '../../utils/formatDate';
 import newRequest from '../../utils/newRequest';
 import AppointmentModal from '../../components/modals/AppointmentModal';
 
@@ -57,12 +58,6 @@ function AppointmentList({ doctorId }) {
         return '';
     }
   };
-
-  const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'short', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString(undefined, options);
-  };
-
 
   return (
     <div className="appointment-list">

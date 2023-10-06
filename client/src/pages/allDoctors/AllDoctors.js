@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import "./AllDoctors.css";
+import Loader from "../../components/loader/Loader";
 import newRequest from "../../utils/newRequest";
 import DoctorCard from "../../components/doctorCard/DoctorCard";
-import "./AllDoctors.css";
 
 const AllDoctors = () => {
 
@@ -17,10 +18,10 @@ const AllDoctors = () => {
     });
 
     // when page is loading
-    if (isLoading) return <div>Loading</div>;
+    if (isLoading) return <div><Loader /></div>;
 
     // when there is an error
-    if (error) return <div>An eror has occured</div>
+    if (error) return <div>An eror has occured...</div>
 
     return (
         <div className="allDoctors">
