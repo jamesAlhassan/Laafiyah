@@ -52,7 +52,7 @@ app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/patient', authMiddleware, patientRouter)
 app.use('/api/v1/doctor', doctorRouter)
 app.use('/api/v1/appointment', authMiddleware, appointmentRouter)
-app.use('/api/v1/review', reviewRouter);
+app.use('/api/v1/review', authMiddleware, reviewRouter);
 app.use('/api/v1/availability', authMiddleware, availabilityRouter);
 app.use(notFoundMiddleWare);
 app.use(errorHandlerMiddleware);
