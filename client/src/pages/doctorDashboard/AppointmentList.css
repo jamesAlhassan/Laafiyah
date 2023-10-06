@@ -56,3 +56,21 @@ button:hover {
 .declined {
   background-color: red;
 }
+
+.table-icons {
+  width: 30px;
+  height: 30px;
+  padding: 3px;
+}
+
+.blue {
+  color: blue;
+}
+
+.brown {
+  color: brown;
+}
+
+.green {
+  color: green;
+}
