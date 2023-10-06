@@ -178,7 +178,7 @@ main {
   margin-bottom: 84px;
 }
 
-.home-container {
+.home-content {
   background: linear-gradient(
       0deg,
       rgba(150, 100, 80, 0.46),
@@ -189,7 +189,7 @@ main {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  min-height: 650px;
+  min-height: 500px;
   color: white;
   padding: 45px 23px;
 }
@@ -475,4 +475,11 @@ input:focus {
   height: 200px;
   width: 200px;
   border-radius: 100%;
+}
+
+.error {
+  color: white;
+  background-color: red;
+  padding: 4px 20px;
+  border-radius: 5px;
 }
