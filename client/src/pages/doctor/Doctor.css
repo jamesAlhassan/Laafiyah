@@ -15,11 +15,6 @@
     flex: 2;
     max-width: 800px;
     margin: 0 auto;
-    padding: 20px;
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 
@@ -29,6 +24,7 @@
     display: block;
     margin: 0px;
 }
+
 .moreInfo ul {
     display: inline-block;
     margin-top: 0px;
@@ -40,11 +36,23 @@
     list-style: disc inside none;
 }
 
-.left .reviews ul{
+.left .info, .left .reviews {
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.left .reviews {
+    margin-top: 20px;
+}
+
+.left .reviews ul {
     display: block;
 }
 
-.left .reviews ul li{
+.left .reviews ul li {
     display: block;
 }
 
@@ -54,7 +62,7 @@
 }
 
 .right .booking-options {
-    padding: 10px;  
+    padding: 10px;
     margin: 0 auto;
     padding: 20px;
     background-color: #f8f8f8;
