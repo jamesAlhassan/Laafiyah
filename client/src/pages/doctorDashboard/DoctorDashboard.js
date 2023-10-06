@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { AiFillSchedule } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { AiFillSchedule, AiOutlineLogout } from 'react-icons/ai';
+import { BiSolidMessageAlt } from 'react-icons/bi'
 import { BsFillCaretRightFill, BsFillPeopleFill, BsFillCalendar2DayFill } from "react-icons/bs";
 import './DoctorDashboard.css';
 import AppointmentList from './AppointmentList';
@@ -15,6 +17,7 @@ const DoctorDashboard = () => {
     const [doctor, setDoctor] = useState({});
     const [showEditProfile, setShowEditProfile] = useState(false);
     const [expanded, setExpanded] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         getDoctor();
@@ -53,6 +56,17 @@ const DoctorDashboard = () => {
     // got back to DoctorProfile from the EditProfile
     const handleGoBack = () => {
         setShowEditProfile(false);
+    }
+
+    const handleLogOut = async () => {
+        // remove the user object and the cookie from the browser
+        try {
+            await newRequest.post('/auth/logout');
+            localStorage.setItem("currentUser", null);
+            navigate('/');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     // to handle sidebar menu Items
@@ -105,13 +119,17 @@ const DoctorDashboard = () => {
                         className={`menu-item ${selectedOption === 'Chat' ? 'active' : ''}`}
                         title='Chat'
                         onClick={() => handleOptionClick('Chat')}>
-                        <BsFillPeopleFill className='menu-icon' />
+                        <BiSolidMessageAlt className='menu-icon' />
                         <span className="menu-label">Chat</span>
                     </div>
 
-                    <div className="menu-item">
-                        <BsFillCalendar2DayFill className='menu-icon' />
-                        <span className="menu-label">Label 4</span>
+                    <div
+                        className={`menu-item ${selectedOption === 'Logout' ? 'active' : ''}`}
+                        title='Logout'
+                        onClick={() => handleLogOut()}
+                    >
+                        <AiOutlineLogout className='menu-icon' />
+                        <span className="menu-label">Logout</span>
                     </div>
                 </div>
             </div>
