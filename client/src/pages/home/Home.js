@@ -4,15 +4,28 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className='home-container'>
-      <h1>
-        You got the doctor appointment plans, we got the appointment plans.
-      </h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Animi incidunt
-        eos aut. Corrupti, odit aspernatur sapiente ab amet error, at corporis
-        nostrum veniam magnam natus tempora perspiciatis dolore quam enim?
-      </p>
-      <Link to='login'>Book Appointment</Link>
+      <section id='one'>
+        <div className='home-content'>
+          <div className='text-content'>
+            <h1 className='white'>
+              Providing Special care For <strong>You At Home</strong>
+            </h1>
+            <h4 className='blackish'>
+              We offer special Medical services for special YOUR needs
+            </h4>
+            <div className='two-button'>
+              <Link to='alldoctors'>
+                <button style={{ marginRight: "16px" }} className='w-btn'>
+                  View Doctors
+                </button>
+              </Link>
+              <button style={{ marginRight: "16px" }} className='t-btn'>
+                Make An Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };
