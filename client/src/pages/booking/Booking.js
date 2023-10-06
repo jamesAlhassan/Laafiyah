@@ -1,16 +1,26 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import './Booking.css';
 import DoctorSummary from "../../components/doctorSummary/DoctorSummary";
 import formatDate from "../../utils/formatDate";
 import newRequest from "../../utils/newRequest";
-import Review from "../../components/review/Review";
 
 const Booking = () => {
     const [availability, setAvailability] = useState([]);
     const [doctor, setDoctor] = useState({});
     const [isEmpty, setIsEmpty] = useState(false);
     const { doctorId } = useParams();
+
+    // get the current user
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        // redirect to login page if user is not logged in
+        if (!user || user == null) {
+            navigate('/login');
+        }
+    }, []);
 
     useEffect(() => {
         fetchAvailability();
@@ -94,17 +104,6 @@ const Booking = () => {
                     ) : (
                         <p>No availability data.</p>
                     )}
-                </div>
-
-                <div className="review-container">
-                    <h3>Reviews</h3>
-                    <ul>
-                        <li><Review /></li>
-                        <li><Review /></li>
-                        <li><Review /></li>
-                        <li><Review /></li>
-                        <li><Review /></li>
-                    </ul>
                 </div>
             </div>
         </div>
