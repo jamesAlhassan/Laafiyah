@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
-import { AiFillSchedule } from 'react-icons/ai';
-import { BsFillCalendar2DayFill, BsFillCaretRightFill, BsFillPeopleFill } from "react-icons/bs";
+import { Link, useNavigate } from 'react-router-dom';
+import { AiFillSchedule, AiOutlineLogout } from 'react-icons/ai';
+import { BiSolidMessageAlt } from 'react-icons/bi';
+import { BsFillCaretRightFill, BsFillPeopleFill } from "react-icons/bs";
 import './PatientDashboard.css';
 import PatientAppointments from "./PatientAppointments";
 import PatientEditProfile from "./PatientEditProfile";
@@ -17,6 +18,7 @@ const PatientDashboard = () => {
   const [showEditProfile, setShowEditProfile] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [proImage, setProImage] = useState(profile_pic);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPatient();
@@ -57,6 +59,17 @@ const PatientDashboard = () => {
     setShowEditProfile(false);
   }
 
+  const handleLogOut = async () => {  
+    // remove the user object and the cookie from the browser
+    try {
+      await newRequest.post('/auth/logout');
+      localStorage.setItem("currentUser", null);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   // to handle the sidebar menu Items
   const contentMap = {
     Appointment: <PatientAppointments patientId={patient._id} />,
@@ -64,7 +77,7 @@ const PatientDashboard = () => {
       <PatientEditProfile patient={patient} goBack={handleGoBack} />
     ) : (
       <PatientProfile patient={patient} onEditProfile={handleEditProfileClick} />),
-      Chat: <ChatComponent userType="patient" userId={patient._id} />
+    Chat: <ChatComponent userType="patient" userId={patient._id} />,
   };
 
   return (
@@ -96,13 +109,17 @@ const PatientDashboard = () => {
             className={`menu-item ${selectedOption === 'Chat' ? 'active' : ''}`}
             title='Chat'
             onClick={() => handleOptionClick('Chat')}>
-            <BsFillPeopleFill className='menu-icon' />
+            <BiSolidMessageAlt className='menu-icon' />
             <span className="menu-label">Chat</span>
           </div>
 
-          <div className="menu-item">
-            <BsFillCalendar2DayFill className='menu-icon' />
-            <span className="menu-label">Label 4</span>
+          <div
+            className={`menu-item ${selectedOption === 'Logout' ? 'active' : ''}`}
+            title='Logout'
+            onClick={() => handleLogOut()}
+          >
+            <AiOutlineLogout className='menu-icon' />
+            <span className="menu-label">Logout</span>
           </div>
         </div>
       </div>
