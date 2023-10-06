@@ -1,13 +1,16 @@
 import './Review.css';
+import formatDate from '../../utils/formatDate';
+import RatingStars from '../rating/Rating';
 
-const Review = () => {
+const Review = ({ review }) => {
     return (
         <div className='review'>
-            <h4>I recommend the doctor</h4>
-            <p>Great doctor I really enjoyed his service</p>
+            <h4>{review.title}</h4>
+            <RatingStars rating={review.rating} />
+            <p>{review.content}</p>
             <div className='subscript'>
-                <p>Abdul-Fatahu</p>
-                <p>21st September 2023</p>
+                <p>{formatDate(review.createdAt)}</p>
+                <p>{review.patient.firstName} {review.patient.lastName}</p>
             </div>
         </div>
     );
