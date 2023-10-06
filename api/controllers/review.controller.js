@@ -33,7 +33,8 @@ const getReview = async (req, res) => {
 
 const getDoctorReviews = async (req, res) => {
     // get all reviews for a particular doctor
-    const reviews = await Review.find({ doctor: req.params.doctorId });
+    const reviews = await Review.find({ doctor: req.params.doctorId })
+    .populate('patient').exec();
     if (!reviews) throw new NotFoundError('No reveiws found for this doctor');
     res.status(StatusCodes.OK).send({ reviews, count: reviews.length });
 }
