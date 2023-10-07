@@ -16,13 +16,13 @@ export default function Header() {
   const handleLogout = async () => {
     // remove the user object and the cookie from the browser
     try {
-      await newRequest.post('/auth/logout');
+      await newRequest.post("/auth/logout");
       localStorage.setItem("currentUser", null);
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <header>
@@ -32,7 +32,8 @@ export default function Header() {
       <nav>
         <NavLink
           to='alldoctors'
-          style={({ isActive }) => (isActive ? activeStyles : null)}>
+          style={({ isActive }) => (isActive ? activeStyles : null)}
+        >
           All Doctors
         </NavLink>
         <NavLink
@@ -44,16 +45,17 @@ export default function Header() {
         {user ? (
           <>
             <NavLink
-              to={user?.user.role === 'doctor' ? '/doctordashboard' : '/patientdashboard'}
+              to={
+                user?.user.role === "doctor"
+                  ? "/doctordashboard"
+                  : "/patientdashboard"
+              }
               style={({ isActive }) => (isActive ? activeStyles : null)}
             >
-              dashboard
+              Dashboard
             </NavLink>
-            <NavLink
-              to="/"
-              onClick={handleLogout}
-            >
-              logout
+            <NavLink to='/' onClick={handleLogout}>
+              Logout
             </NavLink>
           </>
         ) : (
@@ -61,7 +63,7 @@ export default function Header() {
             to='login'
             style={({ isActive }) => (isActive ? activeStyles : null)}
           >
-            login
+            Login
           </NavLink>
         )}
       </nav>
