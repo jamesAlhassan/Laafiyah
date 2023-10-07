@@ -38,7 +38,7 @@ const Dashboard = () => {
       ) {
         const formData = new FormData();
         formData.append("file", profileImage);
-        formData.append("cloud_name", "dryweqcbf");
+        formData.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
         formData.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
 
         const res = await fetch(
