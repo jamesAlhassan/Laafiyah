@@ -1,6 +1,9 @@
 import "./about.css";
 import profile_pic from "../../assets/bcg.png";
+import { useState } from "react";
+
 const About = () => {
+  const [readMore, setReadMore] = useState(false);
   return (
     <div className='about-company'>
       <div className='about-img'>
@@ -10,22 +13,45 @@ const About = () => {
         <span>
           DOCTOR <span className='our'>AT FINGERS</span>
         </span>
-        <p>
-          <b>Laafiyah</b> is a DigiMedicine webapp that provides care both
-          on-demand and by appointment for a variety of physical and mental
-          health issues.With this service, users get to have a brief video/chat
-          consultation with a licensed physician, who can offer guidance and
-          treatment for several common conditions, including cold and flu,
-          allergies, rashes, headaches, and more. Patients with chronic
-          conditions like asthma, diabetes, and high blood pressure can also use
-          Laafiyah to help them manage these issues. Laafiyah also offers
-          behavioural and mental health care through available therapists and
-          psychiatrists. Laafiyah is a free web application and there are no
-          subscription fees. Users pay a flat rate for different services.
-          Laafiyah also accepts many major health insurances. Additionally, they
-          partner with a variety of national companies, like Ghana National
-          Health Insurance Scheme.
-        </p>
+        {readMore ? (
+          <p>
+            <b>Laafiyah</b> is a DigiMedicine webapp that provides care both
+            on-demand and by appointment for a variety of physical and mental
+            health issues.With this service, users get to have a brief
+            video/chat consultation with a licensed physician, who can offer
+            guidance and treatment for several common conditions, including cold
+            and flu, allergies, rashes, headaches, and more. Patients with
+            chronic conditions like asthma, diabetes, and high blood pressure
+            can also use Laafiyah to help them manage these issues. Laafiyah
+            also offers behavioural and mental health care through available
+            therapists and psychiatrists. Laafiyah is a free web application and
+            there are no subscription fees. Users pay a flat rate for different
+            services. Laafiyah also accepts many major health insurances.
+            Additionally, they partner with a variety of national companies,
+            like Ghana National Health Insurance Scheme.
+          </p>
+        ) : (
+          <p>
+            <b>Laafiyah</b> is a DigiMedicine webapp that provides care both
+            on-demand and by appointment for a variety of physical and mental
+            health issues.With this service, users get to have a brief
+            video/chat consultation with a licensed physician, who can offer
+            guidance and treatment for several common conditions, including cold
+            and flu, allergies, rashes, ...
+          </p>
+        )}
+        <button
+          style={{
+            background: "transparent",
+            border: "transparent",
+            textTransform: "capitalize",
+            cursor: "pointer",
+            color: "black",
+          }}
+          onClick={() => setReadMore(!readMore)}
+        >
+          {readMore ? "show less" : "read more"}
+        </button>
       </div>
     </div>
   );
